@@ -34,7 +34,7 @@
 .player-info .a,
 .player-info .b,
 .player-info .c {
-    background-color: #000000; /* Changed to black */
+    background-color: #00000084; /* Changed to black */
     color: #ffffff; /* Changed to white */
     padding: 5px;
     border-radius: 4px;
