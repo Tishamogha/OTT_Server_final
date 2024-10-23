@@ -14,7 +14,7 @@ const Home = () => {
   const fetchMovieData = async () => {
     // Fetch new data from API
     try {
-      const response = await fetch('http://localhost/get_random_movies_list.php?limit=3');
+      const response = await fetch('http://localhost/get_random_movies_list.php?limit=6');
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
