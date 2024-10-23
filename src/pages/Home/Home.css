@@ -6,9 +6,9 @@
 }
 
 .banner-img {
-    margin-top: 5%; /* Remove margin or adjust as needed */
+    margin-top: 10%; /* Remove margin or adjust as needed */
     margin-left: 6%;
-    width: 30%;
+    width: 25%;
     height: auto;
     mask-image: linear-gradient(to right, black, rgba(0, 0, 0, 0));
     -webkit-mask-image: linear-gradient(to right, black, rgba(0, 0, 0, 0));
@@ -16,9 +16,9 @@
 }
 
 .hero-caption {
-    width: 60%; /* Adjust width to take up more space on the left */
+    width: 80%; /* Adjust width to take up more space on the left */
     padding-left: 6%;
-    margin-top: 10%; /* Remove margin or adjust as needed */
+    margin-top: 15%; /* Remove margin or adjust as needed */
 }
 
 .hero-caption h2 {
