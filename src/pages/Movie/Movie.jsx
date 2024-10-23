@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import './Movie.css';
 import { Link } from 'react-router-dom';
 
+const apiUrl = import.meta.env.VITE_GET_MOVIES_API_URL;
+
 const Movie = ({ title }) => {
     const [apiData, setApiData] = useState([]);
     const cardsRef = useRef();
@@ -10,7 +12,6 @@ const Movie = ({ title }) => {
         method: 'GET',
         headers: {
             accept: 'application/json',
-            Authorization: 'Bearer your_token_here' // Replace with your actual token
         }
     };
 
@@ -31,7 +32,7 @@ const Movie = ({ title }) => {
 
         const fetchMovies = async () => {
             try {
-                const response = await fetch(`http://localhost/get_movies_list_json.php`, options);
+                const response = await fetch(`${apiUrl}`, options);
                 const data = await response.json();
 
                 // Create a Set to track unique movie IDs

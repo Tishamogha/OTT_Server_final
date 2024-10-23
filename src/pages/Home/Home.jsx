@@ -13,10 +13,11 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
   const [currentMovieIndex, setCurrentMovieIndex] = useState(0); // Track the current movie being displayed
   const navigate = useNavigate(); // Hook to navigate programmatically
+  const apiUrl = import.meta.env.VITE_GET_MOVIES_RANDOM_API_URL;
 
   const fetchMovieData = async () => {
     try {
-      const response = await fetch('http://localhost/get_random_movies_list.php?limit=6');
+      const response = await fetch(`${apiUrl}`+6);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -111,10 +112,10 @@ const Home = () => {
         )}
       </div>
       <div className="more-cards">
-        <TitleCards title={"Critically Acclaimed Movies"} apiEndpoint="http://localhost/get_random_movies_list.php?limit=10" />
-        <TitleCards title={"Only on BootStream"} apiEndpoint="http://localhost/get_random_movies_list.php?limit=10" />
-        <TitleCards title={"Upcoming"} apiEndpoint="http://localhost/get_random_movies_list.php?limit=10" />
-        <TitleCards title={"Top Picks for You"} apiEndpoint="http://localhost/get_random_movies_list.php?limit=10" />
+        <TitleCards title={"Critically Acclaimed Movies"} apiEndpoint={`${apiUrl}10`} />
+        <TitleCards title={"Only on BootStream"} apiEndpoint={`${apiUrl}10`} />
+        <TitleCards title={"Upcoming"} apiEndpoint={`${apiUrl}10`} />
+        <TitleCards title={"Top Picks for You"} apiEndpoint={`${apiUrl}10`} />
       </div>
       <Footer />
     </div>
