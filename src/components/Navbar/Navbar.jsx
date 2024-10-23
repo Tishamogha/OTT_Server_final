@@ -16,8 +16,8 @@ const Navbar = () => {
           <li>Home</li>
           {/* <li>TV Shows</li> */}
           <li><Link to="/movies">Movies</Link></li>
-          <li>New & popular</li>
-          <li>My List</li>
+          {/* <li>New & popular</li> */}
+          {/* <li>My List</li> */}
         </ul>
       </div>
       <div className="navbar-right">

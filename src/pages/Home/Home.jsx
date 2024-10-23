@@ -72,9 +72,9 @@ const Home = () => {
       </div>
       <div className="more-cards">
         <TitleCards title={"Critically Acclaimed Movies"} apiEndpoint="http://localhost/get_critically_acclaimed_movies.php" />
-        <TitleCards title={"Only on BootStream"} category={"popular"} />
-        <TitleCards title={"Upcoming"} category={"upcoming"} />
-        <TitleCards title={"Top Picks for You"} category={"now_playing"} />
+        <TitleCards title={"Only on BootStream"} apiEndpoint="http://localhost/get_random_movies_list.php" />
+        <TitleCards title={"Upcoming"} apiEndpoint="http://localhost/get_random_movies_list.php?limit=10" />
+        <TitleCards title={"Top Picks for You"} apiEndpoint="http://localhost/get_random_movies_list.php?limit=6" />
       </div>
       <Footer />
     </div>
