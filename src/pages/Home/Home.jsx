@@ -9,10 +9,11 @@ import { Link } from 'react-router-dom';
 
 const Home = () => {
   const [movieData, setMovieData] = useState(null);
+  const [movieList, setMovieList] = useState([]); // Store the list of 6 movies
   const [loading, setLoading] = useState(true);
+  const [currentMovieIndex, setCurrentMovieIndex] = useState(0); // Track the current movie being displayed
 
   const fetchMovieData = async () => {
-    // Fetch new data from API
     try {
       const response = await fetch('http://localhost/get_random_movies_list.php?limit=6');
       if (!response.ok) {
@@ -23,13 +24,13 @@ const Home = () => {
       // Cache the new data in local storage
       localStorage.setItem('moviesCache', JSON.stringify(data));
 
-      // Use the new data and display it
-      const randomIndex = Math.floor(Math.random() * data.cards.length);
-      setMovieData(data.cards[randomIndex]);
+      // Set the list of movies and the initial movie
+      setMovieList(data.cards);
+      setMovieData(data.cards[0]); // Display the first movie initially
     } catch (error) {
       console.error('Error fetching movie data:', error);
     } finally {
-      setLoading(false); // Ensuring loading state is updated
+      setLoading(false); // Ensure loading state is updated
     }
   };
 
@@ -39,14 +40,30 @@ const Home = () => {
 
     if (cachedData) {
       // If cached data is available, use it
-      const randomIndex = Math.floor(Math.random() * cachedData.cards.length);
-      setMovieData(cachedData.cards[randomIndex]);
+      setMovieList(cachedData.cards);
+      setMovieData(cachedData.cards[0]); // Display the first movie initially
       setLoading(false); // Set loading to false as we have cached data
     }
 
     // Fetch new data from the API in the background
     fetchMovieData();
   }, []);
+
+  // Cycle through the movies every 5 seconds
+  useEffect(() => {
+    if (movieList.length > 0) {
+      const intervalId = setInterval(() => {
+        setCurrentMovieIndex((prevIndex) => {
+          const nextIndex = (prevIndex + 1) % movieList.length; // Cycle through the movie list
+          setMovieData(movieList[nextIndex]);
+          return nextIndex;
+        });
+      }, 5000); // Update every 5 seconds
+
+      // Clear the interval when the component unmounts
+      return () => clearInterval(intervalId);
+    }
+  }, [movieList]);
 
   return (
     <div className='home'>

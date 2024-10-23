@@ -65,7 +65,7 @@ const TitleCards = ({ title, apiEndpoint }) => {
               </Link>
             ))
           ) : (
-            <p>No movies available.</p>
+            <p>Refreshing cards...</p>
           )}
         </div>
       )}
