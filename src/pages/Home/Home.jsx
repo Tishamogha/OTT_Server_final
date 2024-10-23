@@ -43,13 +43,13 @@ const Home = () => {
       <Navbar />
       <div className="hero">
         {loading ? (
-          <p>Loading...</p>
+          <p></p>
         ) : movieData ? (
           <>
             <img src={movieData.album_art_path} alt={movieData.name} className='banner-img' />
             <div className="hero-caption">
               <h2>{movieData.name}</h2>
-              <p>{movieData.des}</p>
+              <p dangerouslySetInnerHTML={{ __html: movieData.des.replace(/\n/g, '<br />') }} />
               <div className="hero-btns">
                 <Link 
                   to={`/player/${movieData.id}`} 
