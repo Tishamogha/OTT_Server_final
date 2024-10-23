@@ -94,7 +94,7 @@ const Home = () => {
             </div>
           </>
         ) : (
-          <p>No movie data available.</p>
+          <p>Refreshing page...</p>
         )}
       </div>
       <div className="more-cards">

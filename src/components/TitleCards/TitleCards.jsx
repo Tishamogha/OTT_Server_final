@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './TitleCards.css';
 import { Link } from 'react-router-dom';
 
 const TitleCards = ({ title, apiEndpoint }) => {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
+  const cardsRef = useRef();
 
   // Create a unique cache key based on the apiEndpoint to ensure distinct caches
   const cacheKey = `movies_cache_${encodeURIComponent(apiEndpoint)}`;
@@ -49,6 +50,21 @@ const TitleCards = ({ title, apiEndpoint }) => {
       // No cached data, fetch movies data from the API
       fetchMovies();
     }
+
+    // Add mouse wheel event listener for horizontal scrolling
+    if (cardsRef.current) {
+      const handleWheel = (event) => {
+        event.preventDefault();
+        cardsRef.current.scrollLeft += event.deltaY;
+      };
+
+      cardsRef.current.addEventListener('wheel', handleWheel);
+
+      return () => {
+        // Cleanup event listener on unmount
+        cardsRef.current.removeEventListener('wheel', handleWheel);
+      };
+    }
   }, [apiEndpoint]); // Refetch if the apiEndpoint changes
 
   return (
@@ -57,15 +73,16 @@ const TitleCards = ({ title, apiEndpoint }) => {
       {loading ? (
         <p>Loading...</p>
       ) : (
-        <div className="card-list">
+        <div className="card-list" ref={cardsRef}>
           {movies.length > 0 ? (
-            movies.map((card, index) => (
-              <Link to={`/player/${card.id}`} className="card" key={index}>
+            movies.map((card) => (
+              <Link to={`/player/${card.id}`} className="card" key={card.id} state={{ url: card.url }}>
                 <img src={card.album_art_path} alt={card.name} />
+                <p>{card.name}</p>
               </Link>
             ))
           ) : (
-            <p>Refreshing cards...</p>
+            <p>No movies found.</p>
           )}
         </div>
       )}
