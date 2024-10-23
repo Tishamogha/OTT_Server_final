@@ -1,48 +1,47 @@
-import React, {useEffect, useRef, useState} from 'react'
-import './TitleCards.css'
-import cards_data from '../../assets/Cards/cards'
-import {Link} from  'react-router-dom'
+import React, { useState, useEffect } from 'react';
+import './TitleCards.css';
+import { Link } from 'react-router-dom';
 
-const TitleCards = ({title, category}) => {
+const TitleCards = ({ title, apiEndpoint }) => {
+  const [movies, setMovies] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const [apiData, setApiData] = useState([]);
-  const cardsRef = useRef();
-
-  const options = {
-    method: 'GET',
-    headers: {
-      accept: 'application/json',
-      Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0YzYyNzI1N2VhNDM5N2IyM2EzN2FhYTI0ZGMyNWY3OCIsIm5iZiI6MTcyOTQ2NzUwNC41Njk3NDksInN1YiI6IjY3MTU5Mzc1OTk0MzYzN2NlNTgyODBjYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.iGJHIOXTFRvQuNcaTxl26ZcI4XM6ZU72f5ueXjCMRdY'
+  const fetchMovies = async () => {
+    try {
+      const response = await fetch(apiEndpoint);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data = await response.json();
+      setMovies(data.cards); // Assuming your API returns an array under "cards"
+    } catch (error) {
+      console.error('Error fetching movie data:', error);
+    } finally {
+      setLoading(false); // Ensure loading state is updated
     }
   };
 
-  const handleWheel = (event) =>{
-    event.preventDefault();
-    cardsRef.current.scrollLeft += event.deltaY;
-  }
-  useEffect( ()=> {
-    fetch(`https://api.themoviedb.org/3/movie/${category?category:"now_playing"}?language=en-US&page=1`, options)
-    .then(response => response.json())
-    .then(response => setApiData(response.results))
-    .catch(err => console.error(err));
-
-    cardsRef.current.addEventListener('wheel', handleWheel);
-  },[])
-
+  useEffect(() => {
+    fetchMovies(); // Fetch movies when the component mounts
+  }, [apiEndpoint]); // Refetch if the apiEndpoint changes
 
   return (
     <div className='title-cards'>
-      <h2>{title?title: "Popular on BootStream"}</h2>
-      <div className="card-list" ref={cardsRef}>
-        {apiData.map((card, index)=>{
-          return <Link to={`/player/${card.id}`} className="card" key={index}>
-            <img src={`https://image.tmdb.org/t/p/w500`+card.backdrop_path} alt="" />
-            <p>{card.original_title}</p>
-          </Link>
-        })}
-      </div>
+      <h2>{title ? title : "Popular on BootStream"}</h2>
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <div className="card-list">
+          {movies.map((card, index) => (
+            <Link to={`/player/${card.id}`} className="card" key={index}>
+              <img src={card.album_art_path} alt={card.name} />
+              {/* <p>{card.name}</p> */}
+            </Link>
+          ))}
+        </div>
+      )}
     </div>
-  )
+  );
 }
 
-export default TitleCards
+export default TitleCards;

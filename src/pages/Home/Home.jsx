@@ -51,16 +51,16 @@ const Home = () => {
               <h2>{movieData.name}</h2>
               <p dangerouslySetInnerHTML={{ __html: movieData.des.replace(/\n/g, '<br />') }} />
               <div className="hero-btns">
-                <Link 
-                  to={`/player/${movieData.id}`} 
-                  className='btn play-btn' 
-                  state={{ 
+                <Link
+                  to={`/player/${movieData.id}`}
+                  className='btn play-btn'
+                  state={{
                     url: movieData.url, // Video URL
                     name: movieData.name, // Movie name
                     type: "Movie" // Movie type (you can modify this as needed)
                   }}
                 >
-                  <img src={play_icon} alt="Play" className='.play-btn'/>Play
+                  <img src={play_icon} alt="Play" className='.play-btn' />Play
                 </Link>
                 <button className='btn dark-btn'><img src={info_icon} alt="More Info" />More Info</button>
               </div>
@@ -71,7 +71,7 @@ const Home = () => {
         )}
       </div>
       <div className="more-cards">
-        <TitleCards title={"BlockBuster Movies"} category={"top_rated"} />
+        <TitleCards title={"Critically Acclaimed Movies"} apiEndpoint="http://localhost/get_critically_acclaimed_movies.php" />
         <TitleCards title={"Only on BootStream"} category={"popular"} />
         <TitleCards title={"Upcoming"} category={"upcoming"} />
         <TitleCards title={"Top Picks for You"} category={"now_playing"} />
