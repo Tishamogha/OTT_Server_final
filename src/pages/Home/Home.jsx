@@ -12,13 +12,20 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
 
   const fetchMovieData = async () => {
+    // Fetch new data from API
     try {
-      const response = await fetch('http://localhost/get_single_movie_random.php');
+      const response = await fetch('http://localhost/get_random_movies_list.php?limit=3');
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
       const data = await response.json();
-      setMovieData(data.card[0]); // Assuming the structure is as you provided
+
+      // Cache the new data in local storage
+      localStorage.setItem('moviesCache', JSON.stringify(data));
+
+      // Use the new data and display it
+      const randomIndex = Math.floor(Math.random() * data.cards.length);
+      setMovieData(data.cards[randomIndex]);
     } catch (error) {
       console.error('Error fetching movie data:', error);
     } finally {
@@ -27,15 +34,18 @@ const Home = () => {
   };
 
   useEffect(() => {
-    fetchMovieData(); // Fetch initial movie data
+    // Check local storage for cached data
+    const cachedData = JSON.parse(localStorage.getItem('moviesCache'));
 
-    const intervalId = setInterval(() => {
-      fetchMovieData(); // Fetch new movie data every 5 seconds
-    }, 5000);
+    if (cachedData) {
+      // If cached data is available, use it
+      const randomIndex = Math.floor(Math.random() * cachedData.cards.length);
+      setMovieData(cachedData.cards[randomIndex]);
+      setLoading(false); // Set loading to false as we have cached data
+    }
 
-    return () => {
-      clearInterval(intervalId); // Clear interval on component unmount
-    };
+    // Fetch new data from the API in the background
+    fetchMovieData();
   }, []);
 
   return (
@@ -43,7 +53,7 @@ const Home = () => {
       <Navbar />
       <div className="hero">
         {loading ? (
-          <p></p>
+          <p>Loading...</p> // Display a loading message while fetching data
         ) : movieData ? (
           <>
             <img src={movieData.album_art_path} alt={movieData.name} className='banner-img' />
@@ -60,7 +70,7 @@ const Home = () => {
                     type: "Movie" // Movie type (you can modify this as needed)
                   }}
                 >
-                  <img src={play_icon} alt="Play" className='.play-btn' />Play
+                  <img src={play_icon} alt="Play" />Play
                 </Link>
                 <button className='btn dark-btn'><img src={info_icon} alt="More Info" />More Info</button>
               </div>
@@ -71,10 +81,10 @@ const Home = () => {
         )}
       </div>
       <div className="more-cards">
-        <TitleCards title={"Critically Acclaimed Movies"} apiEndpoint="http://localhost/get_critically_acclaimed_movies.php" />
-        <TitleCards title={"Only on BootStream"} apiEndpoint="http://localhost/get_random_movies_list.php" />
+        <TitleCards title={"Critically Acclaimed Movies"} apiEndpoint="http://localhost/get_random_movies_list.php?limit=10" />
+        <TitleCards title={"Only on BootStream"} apiEndpoint="http://localhost/get_random_movies_list.php?limit=10" />
         <TitleCards title={"Upcoming"} apiEndpoint="http://localhost/get_random_movies_list.php?limit=10" />
-        <TitleCards title={"Top Picks for You"} apiEndpoint="http://localhost/get_random_movies_list.php?limit=6" />
+        <TitleCards title={"Top Picks for You"} apiEndpoint="http://localhost/get_random_movies_list.php?limit=10" />
       </div>
       <Footer />
     </div>
