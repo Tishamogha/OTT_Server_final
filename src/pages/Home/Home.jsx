@@ -5,13 +5,14 @@ import play_icon from '../../assets/play_icon.png';
 import info_icon from '../../assets/info_icon.png';
 import TitleCards from '../../components/TitleCards/TitleCards';
 import Footer from '../../components/Footer/Footer';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Home = () => {
   const [movieData, setMovieData] = useState(null);
   const [movieList, setMovieList] = useState([]); // Store the list of 6 movies
   const [loading, setLoading] = useState(true);
   const [currentMovieIndex, setCurrentMovieIndex] = useState(0); // Track the current movie being displayed
+  const navigate = useNavigate(); // Hook to navigate programmatically
 
   const fetchMovieData = async () => {
     try {
@@ -43,10 +44,22 @@ const Home = () => {
       setMovieList(cachedData.cards);
       setMovieData(cachedData.cards[0]); // Display the first movie initially
       setLoading(false); // Set loading to false as we have cached data
+    } else {
+      // Fetch new data from the API if no cached data
+      fetchMovieData();
     }
 
-    // Fetch new data from the API in the background
-    fetchMovieData();
+    // Force a refresh on component mount
+    const handleRefresh = () => {
+      fetchMovieData();
+    };
+
+    window.addEventListener('popstate', handleRefresh);
+
+    // Cleanup the event listener on unmount
+    return () => {
+      window.removeEventListener('popstate', handleRefresh);
+    };
   }, []);
 
   // Cycle through the movies every 5 seconds

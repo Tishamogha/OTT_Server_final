@@ -78,7 +78,7 @@ const TitleCards = ({ title, apiEndpoint }) => {
             movies.map((card) => (
               <Link to={`/player/${card.id}`} className="card" key={card.id} state={{ url: card.url }}>
                 <img src={card.album_art_path} alt={card.name} />
-                <p>{card.name}</p>
+                {/* <p>{card.name}</p> */}
               </Link>
             ))
           ) : (
