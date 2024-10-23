@@ -14,7 +14,7 @@ const Navbar = () => {
         <img src={logo} alt=""/>
         <ul>
           <li>Home</li>
-          <li>TV Shows</li>
+          {/* <li>TV Shows</li> */}
           <li><Link to="/movies">Movies</Link></li>
           <li>New & popular</li>
           <li>My List</li>
