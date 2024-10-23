@@ -5,6 +5,7 @@ import play_icon from '../../assets/play_icon.png';
 import info_icon from '../../assets/info_icon.png';
 import TitleCards from '../../components/TitleCards/TitleCards';
 import Footer from '../../components/Footer/Footer';
+import { Link } from 'react-router-dom';
 
 const Home = () => {
   const [movieData, setMovieData] = useState(null);
@@ -50,7 +51,17 @@ const Home = () => {
               <h2>{movieData.name}</h2>
               <p>{movieData.des}</p>
               <div className="hero-btns">
-                <button className='btn'><img src={play_icon} alt="Play" />Play</button>
+                <Link 
+                  to={`/player/${movieData.id}`} 
+                  className='btn play-btn' 
+                  state={{ 
+                    url: movieData.url, // Video URL
+                    name: movieData.name, // Movie name
+                    type: "Movie" // Movie type (you can modify this as needed)
+                  }}
+                >
+                  <img src={play_icon} alt="Play" className='.play-btn'/>Play
+                </Link>
                 <button className='btn dark-btn'><img src={info_icon} alt="More Info" />More Info</button>
               </div>
             </div>
@@ -61,9 +72,9 @@ const Home = () => {
       </div>
       <div className="more-cards">
         <TitleCards title={"BlockBuster Movies"} category={"top_rated"} />
-        <TitleCards title={"Only on BootStream"} category={"popular"}/>
-        <TitleCards title={"Upcoming"} category={"upcoming"}/>
-        <TitleCards title={"Top Picks for You"} category={"now_playing"}/>
+        <TitleCards title={"Only on BootStream"} category={"popular"} />
+        <TitleCards title={"Upcoming"} category={"upcoming"} />
+        <TitleCards title={"Top Picks for You"} category={"now_playing"} />
       </div>
       <Footer />
     </div>

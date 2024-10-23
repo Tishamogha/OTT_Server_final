@@ -74,3 +74,34 @@
 .more-cards {
     padding: 6%;
 }
+
+
+/* Home.css */
+.play-btn {
+    display: inline-flex;          /* Aligns the image and text */
+    align-items: center;          /* Centers the content vertically */
+    padding: 10px 20px;          /* Adds padding for the button */
+    background-color: #ff4081;   /* Example button background color */
+    color: white;                 /* Button text color */
+    border: none;                 /* Removes border */
+    border-radius: 5px;          /* Adds rounded corners */
+    text-decoration: none;        /* Removes underline from the link */
+    cursor: pointer;              /* Changes cursor to pointer */
+    transition: background-color 0.3s ease; /* Smooth transition */
+  }
+  
+  /* Remove focus outline */
+  .play-btn:focus {
+    outline: none;                /* Removes default outline */
+  }
+  
+  /* Remove underline and color change when clicked */
+  .play-btn:active {
+    text-decoration: none;        /* Ensures no underline on click */
+    color: white;                 /* Keep text color consistent */
+  }
+  
+  .play-btn:hover {
+    background-color: #d5006d;    /* Changes color on hover */
+  }
+  
