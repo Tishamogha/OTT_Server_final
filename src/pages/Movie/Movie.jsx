@@ -71,7 +71,7 @@ const Movie = ({ title }) => {
                     <p>Loading...</p> // Placeholder while loading new data if no cached data
                 ) : (
                     apiData.map((card) => (
-                        <Link to={`/player/${card.id}`} className="card" key={card.id} state={{ url: card.url }}>
+                        <Link to={`/player/${card.id}`} className="card" key={card.id} state={{ url: card.url, name: card.name }}>
                             <img src={card.album_art_path} alt={card.name} />
                             {/* <p>{card.name}</p> */}
                         </Link>

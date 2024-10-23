@@ -1,42 +1,63 @@
-.player{
-    height: 100vh;
+.player {
+    width: 90%;
+    /* max-width: 800px; Set a maximum width for larger screens */
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    justify-content: center; /* Center items vertically */
+    align-items: center; /* Center items horizontally */
+    position: relative; /* Ensure positioning context for absolute children */
+    margin: 0 auto; /* Center the player within the parent container */
 }
-.player img{
+
+.player img {
     position: absolute;
     top: 20px;
     left: 20px;
     width: 50px;
     cursor: pointer;
 }
-.player iframe{
+
+.player iframe {
     border-radius: 10px;
 }
-.player-info{
+
+.player-info {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 80%;
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center items horizontally */
+    width: 100%; /* Full width for visibility */
     font-weight: 700;
+    margin-bottom: 20px; /* Space between info and video */
+    z-index: 10; /* Ensure it appears above video */
 }
-.player-info .a{
-    background-color: #1798CD;
-    color:#000;
-    padding:5px;
+
+.player-info .a,
+.player-info .b,
+.player-info .c {
+    background-color: #000000; /* Changed to black */
+    color: #ffffff; /* Changed to white */
+    padding: 5px;
     border-radius: 4px;
+    margin: -6%;
+    text-align: center; /* Center text within these elements */
+    /* width: 10%; Make it full width to center text effectively */
 }
-.player-info .b{
-    background-color: #1798CD;
-    color:#000;
-    padding:5px;
-    border-radius: 4px;
+
+.video-container {
+    width: 100%; /* Full width for the video */
+    position: relative; /* Context for the overlay */
 }
-.player-info .c{
-    background-color: #1798CD;
-    color:#000;
-    padding:5px;
-    border-radius: 4px;
+
+.player video {
+    width: 100%; /* Ensure video fits within container */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 10px; /* Optional: rounding the video corners */
+}
+
+.overlay {
+    position: absolute;
+    top: 20px; /* Position from the top */
+    left: 20px; /* Position from the left */
+    color: white; /* Change text color to white */
+    z-index: 10; /* Ensure it appears above the video */
 }

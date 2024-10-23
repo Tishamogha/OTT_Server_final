@@ -20,6 +20,7 @@ const Player = () => {
 
     return (
         <div className='player'>
+            {/* Display the movie name and type in the top left */}
             
             {videoUrl ? (
                 <video
@@ -35,11 +36,8 @@ const Player = () => {
             ) : (
                 <p>Loading video...</p>
             )}
-            
-            <br />
             <div className="player-info">
                 <p className='b'>{location.state ? location.state.name : "Movie"}</p>
-                <p className='c'>{location.state ? location.state.type : "Trailer"}</p>
             </div>
         </div>
     );
