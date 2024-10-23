@@ -20,7 +20,6 @@ const Player = () => {
 
     return (
         <div className='player'>
-            <img src={back_arrow_icon} alt="Back" onClick={() => { navigate(-1) }} />
             
             {videoUrl ? (
                 <video

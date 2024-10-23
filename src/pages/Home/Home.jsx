@@ -1,30 +1,63 @@
-import React from 'react'
-import './Home.css'
-import Navbar from '../../components/Navbar/Navbar'
-import hero_banner from '../../assets/hero_banner1.jpg'
-import play_icon from '../../assets/play_icon.png'
-import info_icon from '../../assets/info_icon.png'
-import TitleCards from '../../components/TitleCards/TitleCards'
-import Footer from '../../components/Footer/Footer'
+import React, { useState, useEffect } from 'react';
+import './Home.css';
+import Navbar from '../../components/Navbar/Navbar';
+import play_icon from '../../assets/play_icon.png';
+import info_icon from '../../assets/info_icon.png';
+import TitleCards from '../../components/TitleCards/TitleCards';
+import Footer from '../../components/Footer/Footer';
 
 const Home = () => {
+  const [movieData, setMovieData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  const fetchMovieData = async () => {
+    try {
+      const response = await fetch('http://localhost/get_single_movie_random.php');
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data = await response.json();
+      setMovieData(data.card[0]); // Assuming the structure is as you provided
+    } catch (error) {
+      console.error('Error fetching movie data:', error);
+    } finally {
+      setLoading(false); // Ensuring loading state is updated
+    }
+  };
+
+  useEffect(() => {
+    fetchMovieData(); // Fetch initial movie data
+
+    const intervalId = setInterval(() => {
+      fetchMovieData(); // Fetch new movie data every 5 seconds
+    }, 5000);
+
+    return () => {
+      clearInterval(intervalId); // Clear interval on component unmount
+    };
+  }, []);
+
   return (
     <div className='home'>
       <Navbar />
       <div className="hero">
-        <img src={hero_banner} alt="" className='banner-img' />
-        <div className="hero-caption">
-          <h2>Joker (2019)</h2>
-          <p>Joker is a 2019 American psychological thriller film directed by Todd Phillips from a screenplay he co-wrote with Scott Silver. The film stars Joaquin Phoenix and is loosely based on DC Comics characters, including the Joker. 
-            It follows Arthur Fleck, a failed clown and aspiring stand-up comedian whose descent into mental illness and nihilism culminates with the emergence of an alter-ego known as "Joker" and inspires a violent countercultural revolution against the wealthy in a decaying Gotham City. 
-            </p>
-            <div className="hero-btns">
-              <button className='btn'><img src={play_icon} alt="" />Play</button>
-              <button className='btn dark-btn'><img src={info_icon} alt="" />More Info</button>
+        {loading ? (
+          <p>Loading...</p>
+        ) : movieData ? (
+          <>
+            <img src={movieData.album_art_path} alt={movieData.name} className='banner-img' />
+            <div className="hero-caption">
+              <h2>{movieData.name}</h2>
+              <p>{movieData.des}</p>
+              <div className="hero-btns">
+                <button className='btn'><img src={play_icon} alt="Play" />Play</button>
+                <button className='btn dark-btn'><img src={info_icon} alt="More Info" />More Info</button>
+              </div>
             </div>
-
-            <TitleCards />
-        </div>
+          </>
+        ) : (
+          <p>No movie data available.</p>
+        )}
       </div>
       <div className="more-cards">
         <TitleCards title={"BlockBuster Movies"} category={"top_rated"} />
@@ -34,7 +67,7 @@ const Home = () => {
       </div>
       <Footer />
     </div>
-  )
+  );
 }
 
-export default Home
+export default Home;
