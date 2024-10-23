@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 
 const Movie = ({ title }) => {
     const [apiData, setApiData] = useState([]);
-    const [loading, setLoading] = useState(true); // To manage loading state
     const cardsRef = useRef();
 
     const options = {
@@ -28,7 +27,6 @@ const Movie = ({ title }) => {
         // Load from cache if available
         if (cachedData) {
             setApiData(JSON.parse(cachedData));
-            setLoading(false);
         }
 
         const fetchMovies = async () => {
@@ -45,7 +43,6 @@ const Movie = ({ title }) => {
 
                 setApiData(updatedMovies);
                 localStorage.setItem('moviesData', JSON.stringify(updatedMovies)); // Cache the updated data
-                setLoading(false);
             } catch (err) {
                 console.error(err);
             }
@@ -69,13 +66,13 @@ const Movie = ({ title }) => {
         <div className='movie-cards'>
             <h2>{title ? title : "Movies"}</h2>
             <div className="movie-list" ref={cardsRef}>
-                {loading ? (
-                    <p>Loading...</p> // Placeholder while loading new data
+                {apiData.length === 0 ? (
+                    <p>Loading...</p> // Placeholder while loading new data if no cached data
                 ) : (
                     apiData.map((card) => (
                         <Link to={`/player/${card.id}`} className="card" key={card.id} state={{ url: card.url }}>
                             <img src={card.album_art_path} alt={card.name} />
-                            <p>{card.name}</p>
+                            {/* <p>{card.name}</p> */}
                         </Link>
                     ))
                 )}

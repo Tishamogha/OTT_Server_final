@@ -71,7 +71,7 @@ const Home = () => {
           setMovieData(movieList[nextIndex]);
           return nextIndex;
         });
-      }, 5000); // Update every 5 seconds
+      }, 3000); // Update every 5 seconds
 
       // Clear the interval when the component unmounts
       return () => clearInterval(intervalId);
