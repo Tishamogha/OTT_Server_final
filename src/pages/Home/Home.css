@@ -8,7 +8,7 @@
 .banner-img {
     margin-top: 10%; /* Remove margin or adjust as needed */
     margin-left: 6%;
-    width: 25%;
+    width: 30%;
     height: auto;
     mask-image: linear-gradient(to right, black, rgba(0, 0, 0, 0));
     -webkit-mask-image: linear-gradient(to right, black, rgba(0, 0, 0, 0));

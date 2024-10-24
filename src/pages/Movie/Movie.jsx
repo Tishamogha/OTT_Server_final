@@ -6,6 +6,7 @@ const apiUrl = import.meta.env.VITE_GET_MOVIES_API_URL;
 
 const Movie = ({ title }) => {
     const [apiData, setApiData] = useState([]);
+    const [loading, setLoading] = useState(true); // For handling loading state
     const cardsRef = useRef();
 
     const options = {
@@ -24,10 +25,13 @@ const Movie = ({ title }) => {
 
     useEffect(() => {
         const cachedData = localStorage.getItem('moviesData');
-        
+        let parsedCache = [];
+
         // Load from cache if available
         if (cachedData) {
-            setApiData(JSON.parse(cachedData));
+            parsedCache = JSON.parse(cachedData);
+            setApiData(parsedCache); // Set the cache data to state first
+            setLoading(false); // Assume cached data is fully loaded
         }
 
         const fetchMovies = async () => {
@@ -35,22 +39,30 @@ const Movie = ({ title }) => {
                 const response = await fetch(`${apiUrl}`, options);
                 const data = await response.json();
 
-                // Create a Set to track unique movie IDs
-                const existingIds = new Set(apiData.map(card => card.id));
+                // Use Set to ensure unique movie IDs
+                const existingIds = new Set(parsedCache.map(card => card.id));
                 const newMovies = data.cards.filter(card => !existingIds.has(card.id));
 
-                // Combine existing and new movies
-                const updatedMovies = [...apiData, ...newMovies];
+                // Combine cached and new movies and ensure no duplicates
+                const updatedMovies = [...parsedCache, ...newMovies];
+                
+                // Use Set to filter unique movie cards (by 'id')
+                const uniqueMovies = Array.from(new Set(updatedMovies.map(card => card.id)))
+                    .map(id => updatedMovies.find(card => card.id === id));
 
-                setApiData(updatedMovies);
-                localStorage.setItem('moviesData', JSON.stringify(updatedMovies)); // Cache the updated data
+                setApiData(uniqueMovies);
+                localStorage.setItem('moviesData', JSON.stringify(uniqueMovies)); // Cache updated data
+                setLoading(false); // All data has been loaded
             } catch (err) {
-                console.error(err);
+                console.error('Error fetching movies:', err);
+                setLoading(false); // Error while fetching API; stop loading state
             }
         };
 
+        // Only fetch movies if not already loading data
         fetchMovies();
 
+        // Add the scroll event listener to the cards
         if (cardsRef.current) {
             cardsRef.current.addEventListener('wheel', handleWheel);
         }
@@ -67,15 +79,19 @@ const Movie = ({ title }) => {
         <div className='movie-cards'>
             <h2>{title ? title : "Movies"}</h2>
             <div className="movie-list" ref={cardsRef}>
-                {apiData.length === 0 ? (
-                    <p>Loading...</p> // Placeholder while loading new data if no cached data
+                {loading ? (
+                    <p>Loading...</p> // Show loader until all cards are loaded
                 ) : (
-                    apiData.map((card) => (
-                        <Link to={`/player/${card.id}`} className="card" key={card.id} state={{ url: card.url, name: card.name }}>
-                            <img src={card.album_art_path} alt={card.name} />
-                            {/* <p>{card.name}</p> */}
-                        </Link>
-                    ))
+                    apiData.length === 0 ? (
+                        <p>No movies available.</p> // Placeholder if no data is found
+                    ) : (
+                        apiData.map((card) => (
+                            <Link to={`/player/${card.id}`} className="card" key={card.id} state={{ url: card.url, name: card.name }}>
+                                <img src={card.album_art_path} alt={card.name} />
+                                {/* <p>{card.name}</p> */}
+                            </Link>
+                        ))
+                    )
                 )}
             </div>
         </div>
