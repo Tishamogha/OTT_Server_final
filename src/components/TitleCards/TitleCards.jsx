@@ -9,7 +9,7 @@ const TitleCards = ({ title, movies }) => {
       <div className="card-list">
         {movies && movies.length > 0 ? (
           movies.map((card) => (
-            <Link to={`/player/${card.id}`} className="card" key={card.id} state={{ url: card.url }}>
+            <Link to={`/player/${card.id}`} className="card" key={card.id} state={{ url: card.url, name: card.name }}>
               <img src={card.album_art_path} alt={card.name} />
             </Link>
           ))
