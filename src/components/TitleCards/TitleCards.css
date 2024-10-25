@@ -14,8 +14,8 @@
     display: none;
 }
 .card-list img{
-    width: 240px;
-    height:160px;
+    height: 240px;
+    width:160px;
     border-radius:4px;
     cursor: pointer;
 }

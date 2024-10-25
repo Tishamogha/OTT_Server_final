@@ -1,6 +1,6 @@
 import React from 'react'
 import './Navbar.css'
-import logo from '../../assets/logo.png'
+import logo from '../../assets/BSLogo_transparent.png'
 import search_icon from '../../assets/search_icon.svg'
 import bell_icon from '../../assets/bell_icon.png'
 import profile_icon from '../../assets/profile_icon.png'
@@ -14,10 +14,10 @@ const Navbar = () => {
         <img src={logo} alt=""/>
         <ul>
           <li>Home</li>
-          <li>TV Shows</li>
+          {/* <li>TV Shows</li> */}
           <li><Link to="/movies">Movies</Link></li>
-          <li>New & popular</li>
-          <li>My List</li>
+          {/* <li>New & popular</li> */}
+          {/* <li>My List</li> */}
         </ul>
       </div>
       <div className="navbar-right">
