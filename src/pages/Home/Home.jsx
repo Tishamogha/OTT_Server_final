@@ -14,7 +14,9 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
   const [currentMovieIndex, setCurrentMovieIndex] = useState(0); // Track the current movie being displayed
   const navigate = useNavigate();
+
   const apiUrl = import.meta.env.VITE_GET_MOVIES_RANDOM_API_URL;
+  const apiResetUrl = import.meta.env.VITE_RESET_DISK__URL;
 
   // Cache keys
   const heroCacheKey = 'moviesCache';
@@ -118,7 +120,7 @@ const Home = () => {
   // Function to call the external API every 30 seconds when idle
   const callReloadDiskAPI = async () => {
     try {
-      const response = await fetch('http://localhost/reload_disk.php');
+      const response = await fetch(`${apiResetUrl}`);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
