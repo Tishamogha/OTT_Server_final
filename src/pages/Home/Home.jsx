@@ -21,7 +21,7 @@ const Home = () => {
   // Cache keys
   const heroCacheKey = 'moviesCache';
   const titleCardsCacheKey = 'titleCardsCache';
-  const cacheExpiry = 3600000; // 1 hour cache expiry time
+  const cacheExpiry = import.meta.env.VITE_AUTH_CACHE_EXPIRTY;
 
   // Function to check if cache is expired
   const isCacheExpired = (cacheItem) => {
