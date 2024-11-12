@@ -71,7 +71,6 @@ const Login = () => {
       });
       const data = await response.json();
       if (data.status === "OK") {
-        alert("Authentication successful");
         localStorage.setItem("user", JSON.stringify(data.user));
         navigate('/'); // Redirect to the home page on successful authentication
       } else {

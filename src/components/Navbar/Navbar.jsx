@@ -6,9 +6,13 @@ import bell_icon from '../../assets/bell_icon.png';
 import profile_icon from '../../assets/profile_icon.png';
 import caret_icon from '../../assets/caret_icon.png';
 import { Link } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const Navbar = () => {
   const [username, setUsername] = useState("");
+  const authUrl = import.meta.env.VITE_SPRING_AUTH_URL;
+  const signOutUrl = import.meta.env.VITE_SPRING_SIGN_OUT_URL;
+  const navigate = useNavigate();
 
   const authenticate = async () => {
     try {
@@ -21,15 +25,14 @@ const Navbar = () => {
       const data = await response.json();
 
       if (data.status === "OK") {
-        alert("Authentication successful");
         localStorage.setItem("user", JSON.stringify(data.user));
-        navigate('/'); // Redirect to the home page on successful authentication
         return true; // Return true if authentication is successful
       } else {
-        alert("Authentication failed.");
+        navigate('/Login');
         return false; // Return false if authentication fails
       }
     } catch (error) {
+      navigate('/Login');
       console.error("Error during authentication:", error);
       return false; // Return false in case of an error
     }
@@ -47,6 +50,27 @@ const Navbar = () => {
     } else {
       console.log("Authentication failed");
       navigate('/Login'); // Redirect to the home page on successful authentication
+    }
+  };
+
+  const signOut = async () => {
+    const token = localStorage.getItem("authToken");
+    try {
+      const response = await fetch(signOutUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token })
+      });
+      if (response.ok) {
+        localStorage.removeItem("authToken");
+        localStorage.removeItem("user");
+        setUsername("");
+        navigate('/Login');
+      } else {
+        alert("Sign-out failed.");
+      }
+    } catch (error) {
+      console.error("Error during sign-out:", error);
     }
   };
 
@@ -76,7 +100,15 @@ const Navbar = () => {
           <img src={profile_icon} alt="Profile Icon" className='profile' />
           <img src={caret_icon} alt="Caret Icon" />
           <div className="dropdown">
-            {username ? <span>{username}</span> : <Link to="/Login">Sign in</Link>}
+            {username ? (
+              <>
+                <span>{username}</span>
+                <p></p>
+                <p><button onClick={signOut}>Sign Out</button></p>
+              </>
+            ) : (
+              <Link to="/Login">Sign in</Link>
+            )}
           </div>
         </div>
       </div>
