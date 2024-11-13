@@ -125,13 +125,13 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
           <button type="submit">{signState}</button>
-          <div className="form-help">
+          {/* <div className="form-help">
             <div className="remember">
               <input type="checkbox" />
               <label>Remember Me</label>
             </div>
             <p>Need help?</p>
-          </div>
+          </div> */}
         </form>
         <div className="form-switch">
           {signState === "Sign In" ? (
