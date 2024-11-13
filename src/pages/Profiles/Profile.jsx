@@ -31,7 +31,8 @@ const Profile = () => {
     fetchProfiles();
   }, []);
 
-  const handleTileClick = () => {
+  const handleTileClick = (profile) => {
+    localStorage.setItem('selectedProfile', JSON.stringify(profile));
     navigate('/'); // Navigate to the homepage on click
   };
 
@@ -43,7 +44,7 @@ const Profile = () => {
           <p>Loading profiles...</p>
         ) : profiles.length > 0 ? (
           profiles.map((profile, index) => (
-            <div key={index} className="profile-tile" onClick={handleTileClick}>
+            <div key={index} className="profile-tile" onClick={() => handleTileClick(profile)}>
               <h3>{`${profile.first_name} ${profile.last_name}`}</h3>
             </div>
           ))
@@ -51,7 +52,7 @@ const Profile = () => {
           <p>No profiles found.</p>
         )}
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 };

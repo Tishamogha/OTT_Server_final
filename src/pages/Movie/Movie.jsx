@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './Movie.css';
 import { Link } from 'react-router-dom';
+import Navbar from '../../components/Navbar/Navbar';
+import Footer from '../../components/Footer/Footer';
 
 const apiUrl = import.meta.env.VITE_GET_MOVIES_API_URL;
 
@@ -13,13 +15,6 @@ const Movie = ({ title }) => {
         method: 'GET',
         headers: {
             accept: 'application/json',
-        }
-    };
-
-    const handleWheel = (event) => {
-        event.preventDefault();
-        if (cardsRef.current) {
-            cardsRef.current.scrollLeft += event.deltaY;
         }
     };
 
@@ -65,27 +60,12 @@ const Movie = ({ title }) => {
         // Initial fetch on mount
         fetchMovies();
 
-        // Add the scroll event listener to the cards
-        if (cardsRef.current) {
-            cardsRef.current.addEventListener('wheel', handleWheel);
-        }
-
-        // Set up interval to call the API every 30 seconds
-        const intervalId = setInterval(() => {
-            fetchMovies(); // Call the fetch function
-        }, 30000); // 30 seconds
-
-        return () => {
-            if (cardsRef.current) {
-                cardsRef.current.removeEventListener('wheel', handleWheel);
-            }
-            clearInterval(intervalId); // Cleanup interval on unmount
-        };
     }, []);
 
     return (
         <div className='movie-cards'>
-            <h2>{title ? title : "Movies"}</h2>
+            <Navbar />
+            {/* <h2>{title ? title : "Movies"}</h2> */}
             <div className="movie-list" ref={cardsRef}>
                 {loading ? (
                     <p>Loading...</p>
@@ -101,6 +81,7 @@ const Movie = ({ title }) => {
                     )
                 )}
             </div>
+            <Footer/>
         </div>
     );
 };

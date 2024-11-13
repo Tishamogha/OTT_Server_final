@@ -13,6 +13,7 @@ const Navbar = () => {
   const authUrl = import.meta.env.VITE_SPRING_AUTH_URL;
   const signOutUrl = import.meta.env.VITE_SPRING_SIGN_OUT_URL;
   const navigate = useNavigate();
+  const profile = JSON.parse(localStorage.getItem('selectedProfile'));
 
   const authenticate = async () => {
     try {
@@ -82,18 +83,26 @@ const Navbar = () => {
 
   }, []);
 
+  const handleTileClickSearch = (profile) => {
+    if (profile && profile.first_name) { // Check if profile and profile.first_name exist
+      navigate('/search', { state: { username: profile.first_name } }); // Pass username in state
+    } else {
+      console.warn('Profile data is empty or missing first name.');
+    }
+  };
+  
 
   return (
     <div className='navbar'>
       <div className="navbar-left">
         <img src={logo} alt="Logo" />
         <ul>
-          <li>Home</li>
+          <li><Link to="/">Home</Link></li>
           <li><Link to="/movies">Movies</Link></li>
         </ul>
       </div>
       <div className="navbar-right">
-        <img src={search_icon} alt="Search Icon" className='icons' />
+        <img src={search_icon} alt="Search Icon" className='icons' onClick={() => handleTileClickSearch(profile)} />
         <p><ul>
           <li><Link to="/profiles">Profiles</Link></li>
         </ul></p>
