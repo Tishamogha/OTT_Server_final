@@ -32,12 +32,13 @@ const Login = () => {
   };
 
   useEffect(() => {
-    // // Set up interval to call the API every 30 seconds
-    // const idleInterval = setInterval(() => {
-    //   callReloadDiskAPI();
-    // }, resetInterval); // Call every 30 seconds
+    // Set up interval to call the API every 30 seconds
+    callReloadDiskAPI();
+    const idleInterval = setInterval(() => {
+      callReloadDiskAPI();
+    }, resetInterval); // Call every 30 seconds
 
-    // return () => clearInterval(idleInterval); // Cleanup on component unmount
+    return () => clearInterval(idleInterval); // Cleanup on component unmount
   }, []);
 
   const handleSignup = async () => {
