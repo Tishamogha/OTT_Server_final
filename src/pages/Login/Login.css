@@ -1,8 +1,7 @@
 .login {
     height: 100vh;
     background-image: 
-        url("../../assets/banner2.jpg"), 
-        linear-gradient(rgba(0, 0, 139, 0.844), rgba(0, 0, 139, 0.897)); /* Dark blue tint */
+        url("../../assets/banner2.jpg");
     background-size: cover;
     background-position: center;
     padding: 20px 8%;

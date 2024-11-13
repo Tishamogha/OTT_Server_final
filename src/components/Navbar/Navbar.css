@@ -51,6 +51,28 @@
     border-radius: 4px;
     width: 35px;
 }
+
+.navbar-right ul{
+    display:flex;
+    list-style:none;
+    gap:20px;
+    list-style-type: none;
+}
+.navbar-right a {
+    text-decoration: none; 
+    color: white; 
+  }
+  .navbar-right a:hover{
+    color: #9CDAFA; 
+  }
+  
+  .navbar-right ul li:hover {
+    color: #9CDAFA; 
+  }
+.navbar-right ul li{
+    cursor: pointer;
+    transition: color 0.3s; 
+}
 .navbar-profile{
     display: flex;
     align-items: center;
