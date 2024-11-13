@@ -14,6 +14,8 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
   const [currentMovieIndex, setCurrentMovieIndex] = useState(0); // Track the current movie being displayed
   const navigate = useNavigate();
+  const resetInterval = import.meta.env.VITE_RESET_FILESYSTEM;
+
 
   const apiUrl = import.meta.env.VITE_GET_MOVIES_RANDOM_API_URL;
   const apiResetUrl = import.meta.env.VITE_RESET_DISK__URL;
@@ -134,7 +136,7 @@ const Home = () => {
     // Set up interval to call the API every 30 seconds
     const idleInterval = setInterval(() => {
       callReloadDiskAPI();
-    }, 30000); // Call every 30 seconds
+    }, resetInterval); // Call every 30 seconds
 
     return () => clearInterval(idleInterval); // Cleanup on component unmount
   }, []);

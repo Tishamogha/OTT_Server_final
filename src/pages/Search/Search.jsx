@@ -93,7 +93,7 @@ const Search = () => {
             <div className="result-tile">
               <img src={card.album_art_path} alt={card.name} className="result-image" />
               <h3>{card.name}</h3>
-              <p>{card.des}</p> {/* Description for more details */}
+              {/* <p>{card.des}</p> Description for more details */}
             </div>
           </Link>
         ))}

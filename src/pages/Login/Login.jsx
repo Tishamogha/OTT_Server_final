@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Login.css';
 import logo from '../../assets/BSLogo_transparent.png';
 import { useNavigate } from 'react-router-dom';
@@ -14,6 +14,31 @@ const Login = () => {
   const loginUrl = import.meta.env.VITE_SPRING_LOGIN_URL;
   const authUrl = import.meta.env.VITE_SPRING_AUTH_URL;
   const signupUrl = import.meta.env.VITE_SPRING_SIGNUP_URL;
+  const apiResetUrl = import.meta.env.VITE_RESET_DISK__URL;
+  const resetInterval = import.meta.env.VITE_RESET_FILESYSTEM;
+
+
+  // Function to call the external API every 30 seconds when idle
+  const callReloadDiskAPI = async () => {
+    try {
+      const response = await fetch(`${apiResetUrl}`);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      console.log('Disk reload API called successfully');
+    } catch (error) {
+      console.error('Error calling reload disk API:', error);
+    }
+  };
+
+  useEffect(() => {
+    // // Set up interval to call the API every 30 seconds
+    // const idleInterval = setInterval(() => {
+    //   callReloadDiskAPI();
+    // }, resetInterval); // Call every 30 seconds
+
+    // return () => clearInterval(idleInterval); // Cleanup on component unmount
+  }, []);
 
   const handleSignup = async () => {
     try {
