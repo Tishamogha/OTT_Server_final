@@ -27,48 +27,59 @@ const Home = () => {
 
   // Function to check if cache is expired
   const isCacheExpired = (cacheItem) => {
-    const currentTime = new Date().getTime();
-    return !cacheItem || currentTime - cacheItem.timestamp > cacheExpiry;
+    // const currentTime = new Date().getTime();
+    // return !cacheItem || currentTime - cacheItem.timestamp > cacheExpiry;
+    return true;
   };
 
   // Fetch movies
   const fetchMovieData = async (forceReload = false) => {
     const cachedData = JSON.parse(localStorage.getItem(heroCacheKey));
 
+    // Check if we should use cache (not expired and no forced reload)
     if (!forceReload && cachedData && !isCacheExpired(cachedData)) {
       setMovieList(cachedData.cards);
       setMovieData(cachedData.cards[0]);
       setLoading(false);
-    } else {
-      try {
-        const response = await fetch(`${apiUrl}` + 6);
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
+      return;
+    }
 
-        localStorage.setItem(heroCacheKey, JSON.stringify({ ...data, timestamp: new Date().getTime() }));
-        setMovieList(data.cards);
-        setMovieData(data.cards[0]);
-      } catch (error) {
-        console.error('Error fetching movie data:', error);
-      } finally {
-        setLoading(false);
+    // Fetch new data from the API if cache is expired or force reload is triggered
+    try {
+      const response = await fetch(`${apiUrl}/6`);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
       }
+      const data = await response.json();
+
+      // Cache the new data with a timestamp
+      localStorage.setItem(
+        heroCacheKey,
+        JSON.stringify({ ...data, timestamp: new Date().getTime() })
+      );
+
+      // Update state with the new data
+      setMovieList(data.cards);
+      setMovieData(data.cards[0]);
+    } catch (error) {
+      console.error('Error fetching movie data:', error);
+    } finally {
+      setLoading(false);
     }
   };
+
 
   // Fetch title cards data
   const fetchTitleCardsData = async (forceReload = false) => {
     const cachedTitleCards = JSON.parse(localStorage.getItem(titleCardsCacheKey));
-  
+
     if (!forceReload && cachedTitleCards && !isCacheExpired(cachedTitleCards)) {
       const { timestamp, ...restOfCachedData } = cachedTitleCards;
       setTitleCardsData(restOfCachedData);
     } else {
       const endpoints = ['10', '20', '30', '40'];
       const titles = ['Critically Acclaimed Movies', 'Only on BootStream', 'Upcoming', 'Top Picks for You'];
-  
+
       const titleCards = {};
       try {
         for (let i = 0; i < endpoints.length; i++) {
@@ -79,7 +90,7 @@ const Home = () => {
           const data = await response.json();
           titleCards[titles[i]] = data.cards;
         }
-  
+
         localStorage.setItem(titleCardsCacheKey, JSON.stringify({ ...titleCards, timestamp: new Date().getTime() }));
         setTitleCardsData(titleCards);
       } catch (error) {
