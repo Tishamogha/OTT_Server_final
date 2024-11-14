@@ -9,6 +9,9 @@ const Search = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  const searchUrl = import.meta.env.VITE_SEARCH_SHOW;
+
+
   // Retrieve the username from the profile selection stored in localStorage
   const profile = JSON.parse(localStorage.getItem('selectedProfile'));
   const username = profile ? `${profile.first_name} ${profile.last_name}` : '';
@@ -43,7 +46,7 @@ const Search = () => {
     const fetchSearchResults = async () => {
       setLoading(true);
       try {
-        const response = await fetch(`http://localhost/search_show.php?username=${encodeURIComponent(username)}&query=${encodeURIComponent(query)}`);
+        const response = await fetch(`${searchUrl}?username=${encodeURIComponent(username)}&query=${encodeURIComponent(query)}`);
 
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -88,7 +91,7 @@ const Search = () => {
             key={card.id}
             to={`/player/${card.id}`} // Navigate to the player page with the card id in the URL
             className="card"
-            state={{ url: card.url, name: card.name }} // Pass data (URL and name) in the state
+            state={{ url: card.url, name: card.name, id:card.id }} // Pass data (URL and name) in the state
           >
             <div className="result-tile">
               <img src={card.album_art_path} alt={card.name} className="result-image" />
