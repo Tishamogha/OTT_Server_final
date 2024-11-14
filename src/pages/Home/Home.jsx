@@ -160,6 +160,7 @@ const Home = () => {
                   state={{
                     url: movieData.url,
                     name: movieData.name,
+                    id: movieData.id,
                     type: "Movie"
                   }}
                 >

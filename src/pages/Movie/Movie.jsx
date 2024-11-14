@@ -79,7 +79,7 @@ const Movie = ({ title }) => {
                         <p>No movies available.</p>
                     ) : (
                         apiData.map((card) => (
-                            <Link to={`/player/${card.id}`} className="card" key={card.id} state={{ url: card.url, name: card.name }}>
+                            <Link to={`/player/${card.id}`} className="card" key={card.id} state={{ url: card.url, name: card.name, id:card.id }}>
                                 <img src={card.album_art_path} alt={card.name} />
                             </Link>
                         ))

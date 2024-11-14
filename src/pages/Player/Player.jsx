@@ -9,14 +9,17 @@ const Player = () => {
     
     const [videoUrl, setVideoUrl] = useState("");
 
+    // Ensure VITE_SPRING_VIDEO_STREAM_URL is correctly set in your environment variables
+    const videoStreamUrl = import.meta.env.VITE_SPRING_VIDEO_STREAM_URL;
+
     useEffect(() => {
-        // Check if the video URL is passed from Movie.jsx via Link state
-        if (location.state && location.state.url) {
-            setVideoUrl(location.state.url);
+        if (videoStreamUrl && location.state && location.state.id) {
+            // Set the video URL only if both videoStreamUrl and id are available
+            setVideoUrl(videoStreamUrl + '/' +location.state.id + '?resolution=auto');
         } else {
-            console.error("No video URL provided");
+            console.error("No video URL or ID provided");
         }
-    }, [location]);
+    }, [location, videoStreamUrl]);
 
     return (
         <div className='player'>
@@ -36,6 +39,7 @@ const Player = () => {
             ) : (
                 <p>Loading video...</p>
             )}
+
             <div className="player-info">
                 <p className='b'>{location.state ? location.state.name : "Movie"}</p>
             </div>
