@@ -83,6 +83,7 @@ const Login = () => {
         alert("Login failed.");
       }
     } catch (error) {
+      alert("Login failed.");
       console.error("Error during login:", error);
     }
   };

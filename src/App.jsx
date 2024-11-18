@@ -6,6 +6,7 @@ import Player from './pages/Player/Player'
 import Movie from './pages/Movie/Movie'
 import Profiles from './pages/Profiles/Profile'
 import Search from './pages/Search/Search'
+import NewPage from './pages/NewPage/NewPage'
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
         <Route path="/movies" element={<Movie />} />
         <Route path="/profiles" element={<Profiles />} />
         <Route path="/search" element={<Search />} />
+        <Route path="/new" element={<NewPage />} />
       </Routes>
     </div>
   )
