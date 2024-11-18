@@ -98,11 +98,11 @@ const Navbar = () => {
         <img src={logo} alt="Logo" />
         <ul>
           <li><Link to="/">Home</Link></li>
-          <li><Link to="/movies">Movies</Link></li>
           <li className="dropdown-menu">
             Categories
             <div className="dropdown-content">
-            <Link to="/categories/general">General</Link>
+              <Link to="/categories/general">General</Link>
+              <Link to="/movies">Movies</Link>
               <Link to="/categories/action">Navy</Link>
               <Link to="/categories/comedy">Army</Link>
               <Link to="/categories/drama">Air Force</Link>
