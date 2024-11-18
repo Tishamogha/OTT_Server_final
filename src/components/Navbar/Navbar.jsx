@@ -90,7 +90,7 @@ const Navbar = () => {
       console.warn('Profile data is empty or missing first name.');
     }
   };
-  
+
 
   return (
     <div className='navbar'>
@@ -99,7 +99,22 @@ const Navbar = () => {
         <ul>
           <li><Link to="/">Home</Link></li>
           <li><Link to="/movies">Movies</Link></li>
+          <li className="dropdown-menu">
+            Categories
+            <div className="dropdown-content">
+            <Link to="/categories/general">General</Link>
+              <Link to="/categories/action">Navy</Link>
+              <Link to="/categories/comedy">Army</Link>
+              <Link to="/categories/drama">Air Force</Link>
+              <Link to="/categories/horror">ANO</Link>
+              <Link to="/categories/scifi">Live Events</Link>
+              <Link to="/categories/ebooks">Ebooks</Link>
+              <Link to="/categories/samples">Samples</Link>
+              <Link to="/categories/misc">Misc</Link>
+            </div>
+          </li>
         </ul>
+
       </div>
       <div className="navbar-right">
         <img src={search_icon} alt="Search Icon" className='icons' onClick={() => handleTileClickSearch(profile)} />
