@@ -102,6 +102,7 @@ const Navbar = () => {
             Categories
             <div className="dropdown-content">
               <Link to="/general">General</Link>
+              <Link to="/">OTT Server</Link>
               <Link to="/movies">Movies</Link>
               <Link to="/categories/action">Navy</Link>
               <Link to="/categories/comedy">Army</Link>
