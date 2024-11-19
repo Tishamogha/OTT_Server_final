@@ -99,7 +99,7 @@ const Login = () => {
       const data = await response.json();
       if (data.status === "OK") {
         localStorage.setItem("user", JSON.stringify(data.user));
-        navigate('/Profiles'); // Redirect to the home page on successful authentication
+        navigate('/'); // Redirect to the home page on successful authentication
       } else {
         alert("Authentication failed.");
       }
