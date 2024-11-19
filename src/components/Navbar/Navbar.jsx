@@ -97,11 +97,10 @@ const Navbar = () => {
       <div className="navbar-left">
         <img src={logo} alt="Logo" />
         <ul>
-          <li><Link to="/">Home</Link></li>
+          <li><Link to="/general">Home</Link></li>
           <li className="dropdown-menu">
             Categories
             <div className="dropdown-content">
-              <Link to="/general">General</Link>
               <Link to="/">OTT Server</Link>
               <Link to="/movies">Movies</Link>
               <Link to="/categories/action">Navy</Link>
