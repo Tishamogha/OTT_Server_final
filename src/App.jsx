@@ -8,6 +8,7 @@ import Profiles from './pages/Profiles/Profile'
 import Search from './pages/Search/Search'
 import NewPage from './pages/NewPage/NewPage'
 import EbooksPage from './pages/Ebook/EbooksPage'
+import General from './pages/General/General'
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
         <Route path="/search" element={<Search />} />
         <Route path="/new" element={<NewPage />} />
         <Route path="/ebooks" element={<EbooksPage />} />
+        <Route path="/general" element={<General />} />
       </Routes>
     </div>
   )

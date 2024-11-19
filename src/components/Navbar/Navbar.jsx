@@ -101,7 +101,7 @@ const Navbar = () => {
           <li className="dropdown-menu">
             Categories
             <div className="dropdown-content">
-              <Link to="/categories/general">General</Link>
+              <Link to="/general">General</Link>
               <Link to="/movies">Movies</Link>
               <Link to="/categories/action">Navy</Link>
               <Link to="/categories/comedy">Army</Link>
@@ -118,9 +118,9 @@ const Navbar = () => {
       </div>
       <div className="navbar-right">
         <img src={search_icon} alt="Search Icon" className='icons' onClick={() => handleTileClickSearch(profile)} />
-        <p><ul>
+        {/* <p><ul>
           <li><Link to="/profiles">Profiles</Link></li>
-        </ul></p>
+        </ul></p> */}
         {/* <img src={bell_icon} alt="Notifications" className='icons' /> */}
         <div className="navbar-profile">
           <img src={profile_icon} alt="Profile Icon" className='profile' />
