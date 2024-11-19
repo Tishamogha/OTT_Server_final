@@ -6,9 +6,9 @@ import Footer from '../../components/Footer/Footer';
 
 const NewPage = () => {
     return (
-        <div className="search-page">
+        <div className="new-page">
           <Navbar />
-          <div className="search-content">
+          <div className="page-content">
             
           </div>
           <Footer />

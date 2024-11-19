@@ -108,7 +108,7 @@ const Navbar = () => {
               <Link to="/categories/drama">Air Force</Link>
               <Link to="/categories/horror">ANO</Link>
               <Link to="/categories/scifi">Live Events</Link>
-              <Link to="/categories/ebooks">Ebooks</Link>
+              <Link to="/ebooks">Ebooks</Link>
               <Link to="/categories/samples">Samples</Link>
               <Link to="/categories/misc">Misc</Link>
             </div>
