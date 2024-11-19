@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import './EbooksPage.css';
 import Navbar from '../../components/Navbar/Navbar';
 import Footer from '../../components/Footer/Footer';
+import './EbooksPage.css';
 
 const EbooksPage = () => {
     const [data, setData] = useState(null);
