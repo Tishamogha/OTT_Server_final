@@ -9,6 +9,9 @@ import Search from './pages/Search/Search'
 import NewPage from './pages/NewPage/NewPage'
 import EbooksPage from './pages/Ebook/EbooksPage'
 import General from './pages/General/General'
+import NavyPage from './pages/NavyPage/NavyPage'
+import ArmyPage from './pages/ArmyPage/ArmyPage'
+import AirForcePage from './pages/AirForcePage/AirForcePage'
 
 const App = () => {
   return (
@@ -23,6 +26,9 @@ const App = () => {
         <Route path="/new" element={<NewPage />} />
         <Route path="/ebooks" element={<EbooksPage />} />
         <Route path="/general" element={<General />} />
+        <Route path="/navy" element={<NavyPage />} />
+        <Route path="/army" element={<ArmyPage />} />
+        <Route path="/airforce" element={<AirForcePage />} />
       </Routes>
     </div>
   )

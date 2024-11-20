@@ -65,15 +65,15 @@ const General = () => {
             <div className="page-content">
                 <h1>{product.name}</h1>
                 <p>{product.description}</p>
-
+                <br></br>
                 <div className="features-wrapper">
                     {product.features.map((feature, index) => (
-                        <div key={index} className="result-tile-wrapper">
-                            <h3 className="result-title">{feature.title}</h3>
-                            <div className="result-tile">
-                                <img src={feature.image} alt={feature.title} className="result-image" />
-                                <div className="result-content">
-                                    <p className="result-description">{feature.description}</p>
+                        <div key={index} className="general-result-tile-wrapper">
+                            <h3 className="general-result-title">{feature.title}</h3>
+                            <div className="general-result-tile">
+                                <img src={feature.image} alt={feature.title} className="general-result-image" />
+                                <div className="general-result-content">
+                                    <p className="general-result-description">{feature.description}</p>
                                 </div>
                             </div>
                         </div>

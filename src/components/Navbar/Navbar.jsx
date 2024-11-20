@@ -104,9 +104,9 @@ const Navbar = () => {
             <div className="dropdown-content">
               <Link to="/">OTT Server</Link>
               <Link to="/movies">Movies</Link>
-              <Link to="/categories/action">Navy</Link>
-              <Link to="/categories/comedy">Army</Link>
-              <Link to="/categories/drama">Air Force</Link>
+              <Link to="/navy">Navy</Link>
+              <Link to="/army">Army</Link>
+              <Link to="/airforce">Air Force</Link>
               <Link to="/categories/horror">ANO</Link>
               <Link to="/categories/scifi">Live Events</Link>
               <Link to="/ebooks">Ebooks</Link>
