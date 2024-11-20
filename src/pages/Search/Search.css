@@ -28,15 +28,14 @@
     margin-bottom: 1.5rem;
 }
 
-.results-list {
+.search-results-list {
     display: flex;
     flex-direction: column;
     gap: 2.5rem;
     width: 100%;
 }
 
-.result-tile {
-    background-color: #1798CD;
+.search-result-tile {
     padding: 1.5rem;
     border-radius: 8px;
     color: white;
@@ -50,12 +49,12 @@
     text-decoration: none; /* Ensure no underline by default */
 }
 
-.result-tile:hover {
+.search-result-tile:hover {
     transform: scale(1.05);
     background-color: #157BB3; /* Darken background on hover */
 }
 
-.result-tile h3 {
+.search-result-tile h3 {
     font-size: 1.2rem;
     font-weight: bold;
     margin: 0; /* Remove margin to fit nicely inside the tile */
@@ -71,16 +70,16 @@
     text-overflow: ellipsis; /* Truncate long descriptions */
 }
 
-.result-image {
+.search-result-image {
     width: 100%;
-    max-width: 200px;
+    max-width: 400px;
     height: auto;
     border-radius: 8px;
     margin-bottom: 1rem;
 }
 
-/* Optional: Style the card links to make them look more interactive */
-.card {
+/* Optional: Style the search-card links to make them look more interactive */
+.search-card {
     text-decoration: none;
     color: inherit; /* Inherit the color of the tile */
 }

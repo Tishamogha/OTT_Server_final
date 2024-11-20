@@ -84,11 +84,12 @@ const Navbar = () => {
   }, []);
 
   const handleTileClickSearch = (profile) => {
-    if (profile && profile.first_name) { // Check if profile and profile.first_name exist
-      navigate('/search', { state: { username: profile.first_name } }); // Pass username in state
-    } else {
-      console.warn('Profile data is empty or missing first name.');
-    }
+    // if (profile && profile.first_name) { // Check if profile and profile.first_name exist
+    //   navigate('/search', { state: { username: profile.first_name } }); // Pass username in state
+    // } else {
+    //   console.warn('Profile data is empty or missing first name.');
+    // }
+    navigate('/search');
   };
 
 

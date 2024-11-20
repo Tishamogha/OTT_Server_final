@@ -9,7 +9,7 @@ const Search = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const searchUrl = import.meta.env.VITE_SEARCH_SHOW;
+  const searchUrl = import.meta.env.VITE_SPRING_MANAGEMENT_SEARCH_SHOW;
 
 
   // Retrieve the username from the profile selection stored in localStorage
@@ -46,23 +46,23 @@ const Search = () => {
     const fetchSearchResults = async () => {
       setLoading(true);
       try {
-        const response = await fetch(`${searchUrl}?username=${encodeURIComponent(username)}&query=${encodeURIComponent(query)}`);
+        const response = await fetch(`${searchUrl}/${encodeURIComponent(query)}`);
 
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
 
-        const textData = await response.text();  // Get the response as a string
+        const textData = await response.json(); 
         let data;
         try {
-          data = JSON.parse(textData);  // Parse the string into an object
+          data = textData.fileSystemArrayList;  // Parse the string into an object
         } catch (error) {
           console.error('Error parsing JSON:', error);
           data = {};  // Set to an empty object if parsing fails
         }
 
         // Check if the response contains the 'cards' field and set the results
-        setSearchResults(data.cards || []);  // Use 'cards' instead of 'results'
+        setSearchResults(data || []);  // Use 'cards' instead of 'results'
       } catch (error) {
         console.error('Error fetching search results:', error);
         setSearchResults([]);  // In case of error, reset results to an empty array
@@ -85,7 +85,7 @@ const Search = () => {
     }
 
     return (
-      <div className="results-list">
+      <div className="search-results-list">
         {searchResults.map((card) => (
           <Link
             key={card.id}
@@ -93,8 +93,8 @@ const Search = () => {
             className="card"
             state={{ url: card.url, name: card.name, id:card.id }} // Pass data (URL and name) in the state
           >
-            <div className="result-tile">
-              <img src={card.album_art_path} alt={card.name} className="result-image" />
+            <div className="search-result-tile">
+              <img src={card.albumArtPath} alt={card.name} className="search-result-image" />
               <h3>{card.name}</h3>
               {/* <p>{card.des}</p> Description for more details */}
             </div>

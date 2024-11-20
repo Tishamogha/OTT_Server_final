@@ -9,7 +9,7 @@
     padding: 2rem 0;
 }
 
-.page-content {
+.ebook-page-content {
     padding: 2rem 1rem; /* Adjust padding for all sides */
     margin-top: 80px; /* Ensure content is not hidden under the navbar */
     width: 100%;
@@ -19,7 +19,7 @@
 }
 
 /* Subfolders Grid */
-.subfolders-grid {
+.ebook-subfolders-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); /* Ensures grid items are placed side by side */
     gap: 1.5rem;
@@ -28,7 +28,7 @@
 }
 
 /* Subcategory Card */
-.subcategory-card {
+.ebook-subcategory-card {
     width: 100%; /* Ensure the card takes up the full space in the grid cell */
     padding: 1.5rem;
     border: 1px solid #444;
@@ -49,7 +49,7 @@
 }
 
 /* Prevent text overflow */
-.subcategory-card p {
+.ebook-subcategory-card p {
     word-wrap: break-word;
     overflow-wrap: break-word;
     text-overflow: ellipsis;
@@ -57,13 +57,13 @@
 }
 
 /* Hover effect for subcategory cards */
-.subcategory-card:hover {
+.ebook-subcategory-card:hover {
     transform: scale(1.05);
     background-color: #555;
 }
 
 /* Files Grid */
-.files-grid {
+.ebook-files-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Responsive grid */
     gap: 1rem;
@@ -73,7 +73,7 @@
 }
 
 /* File Card */
-.file-card {
+.ebook-file-card {
     padding: 1rem;
     border: 1px solid #1798CD;
     border-radius: 8px;
@@ -92,7 +92,7 @@
 }
 
 /* Prevent text overflow */
-.file-card p {
+.ebook-file-card p {
     word-wrap: break-word;
     overflow-wrap: break-word;
     text-overflow: ellipsis;
@@ -100,7 +100,7 @@
 }
 
 /* Hover effect for file cards */
-.file-card:hover {
+.ebook-file-card:hover {
     transform: scale(1.05);
     background-color: #157BB3;
 }
@@ -118,22 +118,22 @@ a {
 /* Media Queries for Responsiveness */
 @media screen and (max-width: 768px) {
     /* Adjust for smaller screens */
-    .subfolders-grid {
+    .ebook-subfolders-grid {
         grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Smaller min width for mobile */
         gap: 1rem;
     }
 
-    .files-grid {
+    .ebook-files-grid {
         grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); /* Adjust for smaller screens */
         gap: 0.8rem;
     }
 
-    .subcategory-card {
+    .ebook-subcategory-card {
         padding: 1rem;
         font-size: 14px; /* Adjust text size for mobile */
     }
 
-    .file-card {
+    .ebook-file-card {
         padding: 0.8rem;
         font-size: 14px; /* Adjust text size for mobile */
     }
@@ -141,17 +141,17 @@ a {
 
 @media screen and (max-width: 480px) {
     /* Further adjustments for very small screens (phones in portrait mode) */
-    .subfolders-grid {
+    .ebook-subfolders-grid {
         grid-template-columns: 1fr; /* Stacks columns for very small screens */
         gap: 0.8rem;
     }
 
-    .files-grid {
+    .ebook-files-grid {
         grid-template-columns: 1fr; /* Stacks file cards */
         gap: 0.6rem;
     }
 
-    .subcategory-card, .file-card {
+    .ebook-subcategory-card, .ebook-file-card {
         padding: 0.8rem; /* Smaller padding for small screens */
     }
 }

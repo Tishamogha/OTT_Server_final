@@ -37,17 +37,17 @@ const EbooksPage = () => {
         if (!folder || !folder.subfolders) return null;
 
         return (
-            <div className="subfolders-grid">
+            <div className="ebook-subfolders-grid">
                 {folder.subfolders.map((subfolder, index) => (
-                    <div key={index} className="subcategory-card">
+                    <div key={index} className="ebook-subcategory-card">
                         <h3>{subfolder.folderName}</h3>
                         {/* Display files if any */}
                         {subfolder.files && subfolder.files.length > 0 && (
-                            <div className="files-grid">
+                            <div className="ebook-files-grid">
                                 {subfolder.files.map((file, fileIndex) => (
                                     <div
                                         key={fileIndex}
-                                        className="file-card"
+                                        className="ebook-file-card"
                                         onClick={() => openFile(`http://localhost:8088/files/${file}`)} // Pass the file URL
                                     >
                                         <p>{file}</p>
@@ -66,11 +66,11 @@ const EbooksPage = () => {
     return (
         <div className="ebooks-page">
             <Navbar />
-            <div className="page-content">
+            <div className="ebook-page-content">
                 {loading ? (
                     <p>Loading...</p>
                 ) : (
-                    <div className="categories-grid">
+                    <div className="ebook-categories-grid">
                         {renderFolders(data)}
                     </div>
                 )}
