@@ -12,6 +12,7 @@ import General from './pages/General/General'
 import NavyPage from './pages/NavyPage/NavyPage'
 import ArmyPage from './pages/ArmyPage/ArmyPage'
 import AirForcePage from './pages/AirForcePage/AirForcePage'
+import CustomVideoPlayer from './components/CustomVideoPlayer/CustomVideoPlayer'
 
 const App = () => {
   return (
@@ -19,7 +20,7 @@ const App = () => {
       <Routes>
         <Route path='/' element={<Home/>}/>
         <Route path='/login' element ={<Login/>}/>
-        <Route path='/player/:id' element={<Player />}/>
+        <Route path='/player/:id' element={<CustomVideoPlayer />}/>
         <Route path="/movies" element={<Movie />} />
         <Route path="/profiles" element={<Profiles />} />
         <Route path="/search" element={<Search />} />

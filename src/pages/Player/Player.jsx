@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import './Player.css';
 import back_arrow_icon from '../../assets/back_arrow_icon.png';
 import { useNavigate, useLocation } from 'react-router-dom';
+import Footer from '../../components/Footer/Footer'
+import CommentApp from '../../components/Comments/CommentApp';
 
 const Player = () => {
     const location = useLocation();
@@ -22,6 +24,7 @@ const Player = () => {
     }, [location, videoStreamUrl]);
 
     return (
+        <>
         <div className='player'>
             {/* Display the movie name and type in the top left */}
             
@@ -44,6 +47,9 @@ const Player = () => {
                 <p className='b'>{location.state ? location.state.name : "Movie"}</p>
             </div>
         </div>
+        <CommentApp/>
+        <Footer/>
+        </>
     );
 }
 

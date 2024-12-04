@@ -1,0 +1,95 @@
+/* General App Styling */
+body {
+  margin: 0;
+  font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  background-color: #121212; /* Dark background */
+  color: #e0e0e0; /* Light text color */
+}
+
+.CommentApp {
+  padding: 20px;
+}
+
+header.App-header {
+  background-color: #1e88e5; /* Darker blue */
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+header.App-header h1 {
+  font-size: 2.5rem;
+  margin: 0;
+}
+
+/* Content Styling */
+.comment-main {
+  max-width: 800px;
+  margin: 20px auto;
+  background: #1f1f1f; /* Darker card background */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* Softer shadow */
+}
+
+/* Custom Button Tweaks */
+.ui.button.primary {
+  background-color: #1e88e5;
+  color: white;
+}
+
+.ui.button.primary:hover {
+  background-color: #1565c0; /* Darker blue on hover */
+}
+
+.ui.button.negative {
+  background-color: #e53935;
+  color: white;
+}
+
+.ui.button.negative:hover {
+  background-color: #d32f2f; /* Darker red on hover */
+}
+
+/* Comment Section */
+.ui.comments {
+  margin-top: 20px;
+}
+
+.ui.comment {
+  margin-bottom: 15px;
+}
+
+.ui.comment .content {
+  border-bottom: 1px solid #444; /* Subtle border */
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+/* Form Styling */
+.ui.form {
+  margin-top: 20px;
+}
+
+.ui.form .field label {
+  font-size: 1rem;
+  color: #e0e0e0; /* Light text color */
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 20px;
+  background-color: #1e1e1e; /* Dark footer */
+  color: #9e9e9e; /* Muted text color */
+  font-size: 0.9rem;
+  margin-top: 20px;
+}
+
+/* Adjust the label spacing */
+.ui.label {
+  margin-right: 5px;
+  margin-bottom: 5px;
+  background-color: #333; /* Dark label background */
+  color: #e0e0e0; /* Light text color */
+}
