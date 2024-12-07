@@ -5,17 +5,18 @@ import play_icon from '../../assets/play_icon.png';
 import info_icon from '../../assets/info_icon.png';
 import TitleCards from '../../components/TitleCards/TitleCards';
 import Footer from '../../components/Footer/Footer';
+import ResumeWatch from '../../components/ResumeTitleCards/ResumeTitleCards';
 import { Link, useNavigate } from 'react-router-dom';
 
 const Home = () => {
   const [movieData, setMovieData] = useState(null);
   const [movieList, setMovieList] = useState([]); // Store the list of 6 movies
   const [titleCardsData, setTitleCardsData] = useState({}); // Store data for all title cards
+  const [resumeData, setResumeData] = useState([]); // Store resume data
   const [loading, setLoading] = useState(true);
   const [currentMovieIndex, setCurrentMovieIndex] = useState(0); // Track the current movie being displayed
   const navigate = useNavigate();
   const resetInterval = import.meta.env.VITE_RESET_FILESYSTEM;
-
 
   const apiUrl = import.meta.env.VITE_GET_MOVIES_RANDOM_API_URL;
   const apiResetUrl = import.meta.env.VITE_RESET_DISK__URL;
@@ -23,20 +24,18 @@ const Home = () => {
   // Cache keys
   const heroCacheKey = 'moviesCache';
   const titleCardsCacheKey = 'titleCardsCache';
+  const resumeDataCacheKey = 'resumeDataCache'; // Cache key for resume data
   const cacheExpiry = import.meta.env.VITE_AUTH_CACHE_EXPIRTY;
 
   // Function to check if cache is expired
   const isCacheExpired = (cacheItem) => {
-    // const currentTime = new Date().getTime();
-    // return !cacheItem || currentTime - cacheItem.timestamp > cacheExpiry;
-    return true;
+    return true; // Placeholder for cache expiry logic
   };
 
   // Fetch movies
   const fetchMovieData = async (forceReload = false) => {
     const cachedData = JSON.parse(localStorage.getItem(heroCacheKey));
 
-    // Check if we should use cache (not expired and no forced reload)
     if (!forceReload && cachedData && !isCacheExpired(cachedData)) {
       setMovieList(cachedData.cards);
       setMovieData(cachedData.cards[0]);
@@ -44,7 +43,6 @@ const Home = () => {
       return;
     }
 
-    // Fetch new data from the API if cache is expired or force reload is triggered
     try {
       const response = await fetch(`${apiUrl}/6`);
       if (!response.ok) {
@@ -52,13 +50,11 @@ const Home = () => {
       }
       const data = await response.json();
 
-      // Cache the new data with a timestamp
       localStorage.setItem(
         heroCacheKey,
         JSON.stringify({ ...data, timestamp: new Date().getTime() })
       );
 
-      // Update state with the new data
       setMovieList(data.cards);
       setMovieData(data.cards[0]);
     } catch (error) {
@@ -68,6 +64,27 @@ const Home = () => {
     }
   };
 
+  // Fetch resume data
+  const fetchResumeData = async () => {
+    const cachedResumeData = JSON.parse(localStorage.getItem(resumeDataCacheKey));
+
+    if (cachedResumeData) {
+      setResumeData(cachedResumeData);
+    } else {
+      try {
+        const response = await fetch(`${apiUrl}/resume-data`);
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+
+        localStorage.setItem(resumeDataCacheKey, JSON.stringify(data));
+        setResumeData(data);
+      } catch (error) {
+        console.error('Error fetching resume data:', error);
+      }
+    }
+  };
 
   // Fetch title cards data
   const fetchTitleCardsData = async (forceReload = false) => {
@@ -79,6 +96,7 @@ const Home = () => {
     } else {
       const endpoints = ['10', '20', '30', '40', '10'];
       const titles = ['General', 'Recommended', 'Navy', 'Army', 'Air force'];
+      const resumeTitles = ['Resume watching'];
 
       const titleCards = {};
       try {
@@ -102,10 +120,12 @@ const Home = () => {
   useEffect(() => {
     fetchMovieData();
     fetchTitleCardsData();
+    fetchResumeData(); // Fetch resume data
 
     const handleRefresh = () => {
       fetchMovieData(true); // Force background reload
       fetchTitleCardsData(true);
+      fetchResumeData(); // Refresh resume data
     };
 
     window.addEventListener('popstate', handleRefresh);
@@ -115,22 +135,20 @@ const Home = () => {
     };
   }, []);
 
-  // Cycle through the movies every 3 seconds
   useEffect(() => {
     if (movieList.length > 0) {
       const intervalId = setInterval(() => {
         setCurrentMovieIndex((prevIndex) => {
-          const nextIndex = (prevIndex + 1) % movieList.length; // Cycle through the movie list
+          const nextIndex = (prevIndex + 1) % movieList.length;
           setMovieData(movieList[nextIndex]);
           return nextIndex;
         });
-      }, 3000); // Update every 3 seconds
+      }, 3000);
 
       return () => clearInterval(intervalId);
     }
   }, [movieList]);
 
-  // Function to call the external API every 30 seconds when idle
   const callReloadDiskAPI = async () => {
     try {
       const response = await fetch(`${apiResetUrl}`);
@@ -144,12 +162,11 @@ const Home = () => {
   };
 
   useEffect(() => {
-    // Set up interval to call the API every 30 seconds
     const idleInterval = setInterval(() => {
       callReloadDiskAPI();
-    }, resetInterval); // Call every 30 seconds
+    }, resetInterval);
 
-    return () => clearInterval(idleInterval); // Cleanup on component unmount
+    return () => clearInterval(idleInterval);
   }, []);
 
   return (
@@ -186,6 +203,7 @@ const Home = () => {
         )}
       </div>
       <div className="more-cards">
+        <ResumeWatch /> {/* Add ResumeWatch card */}
         {Object.keys(titleCardsData).map((title, idx) => (
           <TitleCards key={idx} title={title} movies={titleCardsData[title]} />
         ))}

@@ -1,0 +1,47 @@
+.resume-title-cards {
+    margin-top: 50px;
+    margin-bottom: 30px;
+  }
+  
+  .resume-title-cards h2 {
+    margin-bottom: 8px;
+  }
+  
+  .card-list {
+    display: flex;
+    gap: 10px;
+    overflow-x: scroll;
+  }
+  
+  .card-list::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .card-list img {
+    height: 240px;
+    width: 160px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .card {
+    position: relative;
+  }
+  
+  .progress-bar-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 0 0 4px 4px;
+    overflow: hidden;
+  }
+  
+  .progress-bar {
+    height: 100%;
+    background-color: #1798CD;
+    transition: width 0.3s ease;
+  }
+  
