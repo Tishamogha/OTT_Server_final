@@ -17,7 +17,6 @@ const Login = () => {
   const apiResetUrl = import.meta.env.VITE_RESET_DISK__URL;
   const resetInterval = import.meta.env.VITE_RESET_FILESYSTEM;
 
-
   // Function to call the external API every 30 seconds when idle
   const callReloadDiskAPI = async () => {
     try {
@@ -139,6 +138,31 @@ const Login = () => {
               />
             </>
           )}
+          {/* Dropdowns */}
+          <select className="login-dropdown">
+            <option value="" disabled selected>Select Directorate</option>
+            <option value="Directorate1">Directorate 1</option>
+            <option value="Directorate2">Directorate 2</option>
+            <option value="Directorate3">Directorate 3</option>
+          </select>
+          <select className="login-dropdown">
+            <option value="" disabled selected>Select Unit</option>
+            <option value="Unit1">Unit 1</option>
+            <option value="Unit2">Unit 2</option>
+            <option value="Unit3">Unit 3</option>
+          </select>
+          <select className="login-dropdown">
+            <option value="" disabled selected>Select School</option>
+            <option value="School1">School 1</option>
+            <option value="School2">School 2</option>
+            <option value="School3">School 3</option>
+          </select>
+          <select className="login-dropdown">
+            <option value="" disabled selected>Select Region</option>
+            <option value="Region1">Region 1</option>
+            <option value="Region2">Region 2</option>
+            <option value="Region3">Region 3</option>
+          </select>
           <input
             type="text"
             placeholder="Username"
@@ -152,13 +176,6 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
           <button type="submit">{signState}</button>
-          {/* <div className="form-help">
-            <div className="remember">
-              <input type="checkbox" />
-              <label>Remember Me</label>
-            </div>
-            <p>Need help?</p>
-          </div> */}
         </form>
         <div className="form-switch">
           {signState === "Sign In" ? (
