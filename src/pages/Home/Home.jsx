@@ -77,8 +77,8 @@ const Home = () => {
       const { timestamp, ...restOfCachedData } = cachedTitleCards;
       setTitleCardsData(restOfCachedData);
     } else {
-      const endpoints = ['10', '20', '30', '40'];
-      const titles = ['Critically Acclaimed Movies', 'Only on BootStream', 'Upcoming', 'Top Picks for You'];
+      const endpoints = ['10', '20', '30', '40', '10'];
+      const titles = ['General', 'Recommended', 'Navy', 'Army', 'Air force'];
 
       const titleCards = {};
       try {
