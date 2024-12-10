@@ -5,31 +5,64 @@ import play_icon from '../../assets/play_icon.png';
 import info_icon from '../../assets/info_icon.png';
 import TitleCards from '../../components/TitleCards/TitleCards';
 import Footer from '../../components/Footer/Footer';
-import ResumeWatch from '../../components/ResumeTitleCards/ResumeTitleCards';
+import ResumeTitleCards from '../../components/ResumeTitleCards/ResumeTitleCards';
 import { Link, useNavigate } from 'react-router-dom';
 
 const Home = () => {
   const [movieData, setMovieData] = useState(null);
-  const [movieList, setMovieList] = useState([]); // Store the list of 6 movies
-  const [titleCardsData, setTitleCardsData] = useState({}); // Store data for all title cards
-  const [resumeData, setResumeData] = useState([]); // Store resume data
+  const [movieList, setMovieList] = useState([]);
+  const [titleCardsData, setTitleCardsData] = useState({});
+  const [resumeTitleCardsData, setResumeTitleCardsData] = useState({}); // New state for ResumeTitleCards
+  const [resumeData, setResumeData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [currentMovieIndex, setCurrentMovieIndex] = useState(0); // Track the current movie being displayed
+  const [currentMovieIndex, setCurrentMovieIndex] = useState(0);
   const navigate = useNavigate();
   const resetInterval = import.meta.env.VITE_RESET_FILESYSTEM;
 
   const apiUrl = import.meta.env.VITE_GET_MOVIES_RANDOM_API_URL;
   const apiResetUrl = import.meta.env.VITE_RESET_DISK__URL;
+  const getResumeData = import.meta.env.VITE_GET_SHOWS_WATCHED;
 
   // Cache keys
   const heroCacheKey = 'moviesCache';
   const titleCardsCacheKey = 'titleCardsCache';
-  const resumeDataCacheKey = 'resumeDataCache'; // Cache key for resume data
+  const resumeTitleCardsCacheKey = 'resumeTitleCardsCache'; // Cache key for ResumeTitleCards
+  const resumeDataCacheKey = 'resumeDataCache';
   const cacheExpiry = import.meta.env.VITE_AUTH_CACHE_EXPIRTY;
 
   // Function to check if cache is expired
   const isCacheExpired = (cacheItem) => {
     return true; // Placeholder for cache expiry logic
+  };
+
+  // Fetch ResumeTitleCards data
+  const fetchResumeTitleCardsData = async (forceReload = false) => {
+    const cachedResumeTitleCards = JSON.parse(localStorage.getItem(resumeTitleCardsCacheKey));
+
+    if (!forceReload && cachedResumeTitleCards && !isCacheExpired(cachedResumeTitleCards)) {
+      const { timestamp, ...restOfCachedData } = cachedResumeTitleCards;
+      setResumeTitleCardsData(restOfCachedData);
+    } else {
+      // const endpoint = '6'; // Replace with actual endpoint
+      const title = 'Resume Watching';
+
+      try {
+        const response = await fetch(`${getResumeData}`);
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        const resumeTitleCard = { [title]: data.cards };
+
+        localStorage.setItem(
+          resumeTitleCardsCacheKey,
+          JSON.stringify({ ...resumeTitleCard, timestamp: new Date().getTime() })
+        );
+        setResumeTitleCardsData(resumeTitleCard);
+      } catch (error) {
+        console.error('Error fetching resume title cards data:', error);
+      }
+    }
   };
 
   // Fetch movies
@@ -64,28 +97,6 @@ const Home = () => {
     }
   };
 
-  // Fetch resume data
-  const fetchResumeData = async () => {
-    const cachedResumeData = JSON.parse(localStorage.getItem(resumeDataCacheKey));
-
-    if (cachedResumeData) {
-      setResumeData(cachedResumeData);
-    } else {
-      try {
-        const response = await fetch(`${apiUrl}/resume-data`);
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-
-        localStorage.setItem(resumeDataCacheKey, JSON.stringify(data));
-        setResumeData(data);
-      } catch (error) {
-        console.error('Error fetching resume data:', error);
-      }
-    }
-  };
-
   // Fetch title cards data
   const fetchTitleCardsData = async (forceReload = false) => {
     const cachedTitleCards = JSON.parse(localStorage.getItem(titleCardsCacheKey));
@@ -96,7 +107,6 @@ const Home = () => {
     } else {
       const endpoints = ['10', '20', '30', '40', '10'];
       const titles = ['General', 'Recommended', 'Navy', 'Army', 'Air force'];
-      const resumeTitles = ['Resume watching'];
 
       const titleCards = {};
       try {
@@ -120,12 +130,14 @@ const Home = () => {
   useEffect(() => {
     fetchMovieData();
     fetchTitleCardsData();
-    fetchResumeData(); // Fetch resume data
+    fetchResumeTitleCardsData();
+    //fetchResumeData(); // Fetch resume data
 
     const handleRefresh = () => {
-      fetchMovieData(true); // Force background reload
+      fetchMovieData(true);
       fetchTitleCardsData(true);
-      fetchResumeData(); // Refresh resume data
+      fetchResumeTitleCardsData(true);
+      //fetchResumeData();
     };
 
     window.addEventListener('popstate', handleRefresh);
@@ -202,12 +214,21 @@ const Home = () => {
           <p>Refreshing page...</p>
         )}
       </div>
+
+      <div className="resume-cards">
+
+      </div>
+
       <div className="more-cards">
-        {/* <ResumeWatch /> Add ResumeWatch card */}
+        {Object.keys(resumeTitleCardsData).map((title, idx) => (
+          <ResumeTitleCards key={idx} title={title} movies={resumeTitleCardsData[title]} />
+        ))}
+
         {Object.keys(titleCardsData).map((title, idx) => (
           <TitleCards key={idx} title={title} movies={titleCardsData[title]} />
         ))}
       </div>
+
       <Footer />
     </div>
   );
