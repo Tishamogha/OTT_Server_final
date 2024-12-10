@@ -203,7 +203,7 @@ const Home = () => {
         )}
       </div>
       <div className="more-cards">
-        <ResumeWatch /> {/* Add ResumeWatch card */}
+        {/* <ResumeWatch /> Add ResumeWatch card */}
         {Object.keys(titleCardsData).map((title, idx) => (
           <TitleCards key={idx} title={title} movies={titleCardsData[title]} />
         ))}
