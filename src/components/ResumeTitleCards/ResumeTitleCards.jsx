@@ -9,9 +9,21 @@ const ResumeTitleCards = ({ title, movies }) => {
       <div className="resume-card-list">
         {movies && movies.length > 0 ? (
           movies.map((card) => (
-            <Link to={`/player/${card.id}`} className="card" key={card.id} state={{ url: card.url, name: card.name, id: card.id }}>
-              <img src={card.album_art_path} alt={card.name} />
-            </Link>
+            <div className="card" key={card.id}>
+              <Link
+                to={`/player/${card.id}`}
+                className="card-link"
+                state={{ url: card.url, name: card.name, id: card.id }}
+              >
+                <img src={card.album_art_path} alt={card.name} />
+              </Link>
+              <div className="card-progress-bar-container">
+                <div
+                  className="card-progress-bar"
+                  style={{ width: `${card.progress || 0}%` }}
+                ></div>
+              </div>
+            </div>
           ))
         ) : (
           <p>No movies found.</p>
@@ -19,6 +31,6 @@ const ResumeTitleCards = ({ title, movies }) => {
       </div>
     </div>
   );
-}
+};
 
 export default ResumeTitleCards;

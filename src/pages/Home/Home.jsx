@@ -43,7 +43,6 @@ const Home = () => {
       const { timestamp, ...restOfCachedData } = cachedResumeTitleCards;
       setResumeTitleCardsData(restOfCachedData);
     } else {
-      // const endpoint = '6'; // Replace with actual endpoint
       const title = 'Resume Watching';
 
       try {
@@ -52,7 +51,14 @@ const Home = () => {
           throw new Error('Network response was not ok');
         }
         const data = await response.json();
-        const resumeTitleCard = { [title]: data.cards };
+
+        // Calculate progress for each card
+        const processedData = data.cards.map((card) => ({
+          ...card,
+          progress: (parseInt(card.position, 10) / parseInt(card.duration, 10)) * 100,
+        }));
+
+        const resumeTitleCard = { [title]: processedData };
 
         localStorage.setItem(
           resumeTitleCardsCacheKey,
@@ -221,7 +227,11 @@ const Home = () => {
 
       <div className="more-cards">
         {Object.keys(resumeTitleCardsData).map((title, idx) => (
-          <ResumeTitleCards key={idx} title={title} movies={resumeTitleCardsData[title]} />
+          <ResumeTitleCards
+            key={idx}
+            title={title}
+            movies={resumeTitleCardsData[title]}
+          />
         ))}
 
         {Object.keys(titleCardsData).map((title, idx) => (
