@@ -187,6 +187,14 @@ const Home = () => {
     return () => clearInterval(idleInterval);
   }, []);
 
+  useEffect(() => {
+    const idleInterval = setInterval(() => {
+      fetchResumeTitleCardsData(true);
+    }, 3000);
+
+    return () => clearInterval(idleInterval);
+  }, []);
+
   return (
     <div className='home'>
       <Navbar />
