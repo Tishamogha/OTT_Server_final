@@ -6,10 +6,11 @@ import './EbooksPage.css';
 const EbooksPage = () => {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
-    const ebookUrl = import.meta.env.VITE_SPRING_MANAGEMENT_GET_ALL_EBOOKS;
+    const allEbookUrl = import.meta.env.VITE_SPRING_MANAGEMENT_GET_ALL_EBOOKS;
+    const ebookById = import.meta.env.VITE_SPRING_MANAGEMENT_GET_EBOOK_BY_ID;
 
     useEffect(() => {
-        fetch(ebookUrl, {
+        fetch(allEbookUrl, {
             method: 'GET',
             headers: {
                 Authorization: 'Basic YWRtaW46cGFzc3dvcmQxMjM='
@@ -33,32 +34,34 @@ const EbooksPage = () => {
         window.open(url, '_blank', 'noopener,noreferrer');
     };
 
-    const renderFolders = (folder) => {
-        if (!folder || !folder.subfolders) return null;
+    const renderFiles = (files) => {
+        return files.map((file, fileIndex) => (
+            <div
+                key={fileIndex}
+                className="ebook-file-card"
+                onClick={() => openFile(`${ebookById}${file.id}`)} // Pass the file path
+            >
+                <p>{file.name}</p>
+            </div>
+        ));
+    };
 
+    const renderFolders = (folder) => {
         return (
-            <div className="ebook-subfolders-grid">
-                {folder.subfolders.map((subfolder, index) => (
-                    <div key={index} className="ebook-subcategory-card">
-                        <h3>{subfolder.folderName}</h3>
-                        {/* Display files if any */}
-                        {subfolder.files && subfolder.files.length > 0 && (
-                            <div className="ebook-files-grid">
-                                {subfolder.files.map((file, fileIndex) => (
-                                    <div
-                                        key={fileIndex}
-                                        className="ebook-file-card"
-                                        onClick={() => openFile(`http://localhost:8088/files/${file}`)} // Pass the file URL
-                                    >
-                                        <p>{file}</p>
-                                    </div>
-                                ))}
+            <div className="ebook-subfolder-card">
+                <h3>{folder.folderName}</h3>
+                {/* Render files */}
+                {renderFiles(folder.files)}
+                {/* Recursively render subfolders */}
+                {folder.subfolders && folder.subfolders.length > 0 && (
+                    <div className="ebook-subfolders-grid">
+                        {folder.subfolders.map((subfolder, index) => (
+                            <div key={index}>
+                                {renderFolders(subfolder)}  {/* Recursive call for subfolder */}
                             </div>
-                        )}
-                        {/* Recursively render nested subfolders */}
-                        {subfolder.subfolders && subfolder.subfolders.length > 0 && renderFolders(subfolder)}
+                        ))}
                     </div>
-                ))}
+                )}
             </div>
         );
     };
@@ -71,7 +74,11 @@ const EbooksPage = () => {
                     <p>Loading...</p>
                 ) : (
                     <div className="ebook-categories-grid">
-                        {renderFolders(data)}
+                        {data?.subfolders?.map((folder, index) => (
+                            <div key={index}>
+                                {renderFolders(folder)}  {/* Rendering folder and subfolders */}
+                            </div>
+                        ))}
                     </div>
                 )}
             </div>
