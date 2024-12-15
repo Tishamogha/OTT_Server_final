@@ -60,6 +60,30 @@ const CommentComponent = ({ id, postId, author, createdtime, text }) => {
     setDisplayedReplies(replies.length); // Show all replies
   };
 
+  const avatarUrls = [
+    "https://robohash.org/1?set=set5&size=50x50",
+    "https://robohash.org/2?set=set5&size=50x50",
+    "https://robohash.org/3?set=set5&size=50x50",
+    "https://robohash.org/4?set=set5&size=50x50",
+    "https://robohash.org/5?set=set5&size=50x50",
+    "https://robohash.org/6?set=set5&size=50x50",
+    "https://robohash.org/7?set=set5&size=50x50",
+    "https://robohash.org/8?set=set5&size=50x50",
+    "https://robohash.org/9?set=set5&size=50x50",
+    "https://robohash.org/10?set=set5&size=50x50",
+    "https://robohash.org/11?set=set5&size=50x50",
+    "https://robohash.org/12?set=set5&size=50x50",
+    "https://robohash.org/13?set=set5&size=50x50",
+    "https://robohash.org/14?set=set5&size=50x50",
+    "https://robohash.org/15?set=set5&size=50x50"
+];
+
+
+  // Function to select a random avatar
+  const getRandomAvatar = () => {
+    return avatarUrls[Math.floor(Math.random() * avatarUrls.length)];
+  };
+
   return (
     <CommentGroup className="custom-commentgroup">
       <Comment className="custom-comment">
@@ -68,7 +92,7 @@ const CommentComponent = ({ id, postId, author, createdtime, text }) => {
         <CommentContent className="custom-comment-content">
         <div className="custom-comment-header">
         <CommentAvatar
-          src="https://react.semantic-ui.com/images/avatar/small/elliot.jpg"
+          src={getRandomAvatar()}
         />
           <CommentAuthor as="a" className="custom-comment-author">
             {author}

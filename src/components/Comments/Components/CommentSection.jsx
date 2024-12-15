@@ -12,6 +12,8 @@ const CommentSection = ({ postId }) => {
   const [error, setError] = useState(null);
   const [visibleCount, setVisibleCount] = useState(7);
 
+  const username = JSON.parse(localStorage.getItem("user")).username;
+
   const fetchComments = async () => {
     try {
       setLoading(true);
@@ -55,7 +57,7 @@ const CommentSection = ({ postId }) => {
   return (
     <div>
       <Header as="h2" className="custom-header-h1" dividing>
-        Comments
+        Discussion
       </Header>
 
       {loading && <Loader active inline="centered">Loading comments...</Loader>}
@@ -70,13 +72,14 @@ const CommentSection = ({ postId }) => {
         <AddComment
           postId={postId}
           onCommentPosted={handleCommentPosted}
+          userId={username}
         />
       )}
 
       {!loading && !error && comments.length > 0 && (
         <>
           <Header className="custom-header-h1" as="h3" dividing>
-            Previous Comments
+            Previous Discussions
           </Header>
           {comments.slice(0, visibleCount).map((comment) => (
             <CommentComponent

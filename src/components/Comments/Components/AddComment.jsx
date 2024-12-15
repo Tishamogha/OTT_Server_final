@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { CommentGroup, Form, Button, TextArea } from "semantic-ui-react";
 import { addComment } from "../Services/api";
 
-const AddComment = ({ postId, onCommentPosted, userId = "Anurav" }) => {
+const AddComment = ({ postId, onCommentPosted, userId}) => {
   const [commentText, setCommentText] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);

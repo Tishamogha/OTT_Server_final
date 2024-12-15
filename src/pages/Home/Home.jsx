@@ -18,10 +18,16 @@ const Home = () => {
   const [currentMovieIndex, setCurrentMovieIndex] = useState(0);
   const navigate = useNavigate();
   const resetInterval = import.meta.env.VITE_RESET_FILESYSTEM;
+  const storedUser = localStorage.getItem("user");
+  let parsedUser = null;
+  let getResumeData = import.meta.env.VITE_GET_SHOWS_WATCHED
+  if (storedUser) {
+    parsedUser = JSON.parse(storedUser); // Parse the JSON string
+    getResumeData += parsedUser.username;
+  }
 
   const apiUrl = import.meta.env.VITE_GET_MOVIES_RANDOM_API_URL;
   const apiResetUrl = import.meta.env.VITE_RESET_DISK__URL;
-  const getResumeData = import.meta.env.VITE_GET_SHOWS_WATCHED;
 
   // Cache keys
   const heroCacheKey = 'moviesCache';
@@ -29,6 +35,7 @@ const Home = () => {
   const resumeTitleCardsCacheKey = 'resumeTitleCardsCache'; // Cache key for ResumeTitleCards
   const resumeDataCacheKey = 'resumeDataCache';
   const cacheExpiry = import.meta.env.VITE_AUTH_CACHE_EXPIRTY;
+
 
   // Function to check if cache is expired
   const isCacheExpired = (cacheItem) => {
@@ -43,7 +50,6 @@ const Home = () => {
       const { timestamp, ...restOfCachedData } = cachedResumeTitleCards;
       setResumeTitleCardsData(restOfCachedData);
     } else {
-      const title = 'Resume Watching';
 
       try {
         const response = await fetch(`${getResumeData}`);
@@ -57,6 +63,7 @@ const Home = () => {
           ...card,
           progress: (parseInt(card.position, 10) / parseInt(card.duration, 10)) * 100,
         }));
+        const title = 'Resume Watching';
 
         const resumeTitleCard = { [title]: processedData };
 
