@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './Login.css';
 import logo from '../../assets/BSLogo_transparent.png';
 import { useNavigate } from 'react-router-dom';
+import axios from "axios";
 
 const Login = () => {
   const [signState, setSignState] = useState("Sign In");
@@ -16,6 +17,7 @@ const Login = () => {
   const signupUrl = import.meta.env.VITE_SPRING_SIGNUP_URL;
   const apiResetUrl = import.meta.env.VITE_RESET_DISK__URL;
   const resetInterval = import.meta.env.VITE_RESET_FILESYSTEM;
+  const apiKey = import.meta.env.VITE_API_KEY;
 
   // Function to call the external API every 30 seconds when idle
   const callReloadDiskAPI = async () => {
@@ -44,7 +46,7 @@ const Login = () => {
     try {
       const response = await fetch(signupUrl, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', Authorization: apiKey },
         body: JSON.stringify({
           user: {
             username,
@@ -69,30 +71,36 @@ const Login = () => {
 
   const handleLogin = async () => {
     try {
-      const response = await fetch(loginUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password })
+      const response = await axios.post(loginUrl, {
+        username,
+        password,
+      }, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${apiKey}`,
+        },
       });
-      const data = await response.json();
-      if (data.status === "OK") {
-        localStorage.setItem("authToken", data.token);
-        authenticate();
+
+      console.log('Response from login:', response.data);
+      if (response.data.status === "OK") {
+        localStorage.setItem("authToken", response.data.token);
+        await authenticate();
       } else {
-        alert("Login failed.");
+        alert(`Login failed: ${response.data.message || "Invalid credentials"}`);
       }
     } catch (error) {
-      alert("Login failed.");
       console.error("Error during login:", error);
+      alert("Login failed. Please check your credentials.");
     }
   };
+
 
   const authenticate = async () => {
     try {
       const token = localStorage.getItem("authToken");
-      const response = await fetch(authUrl, {
+      const response = await fetch('http://localhost:8081/modakflix-auth/user/authenticate', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', Authorization: apiKey },
         body: JSON.stringify({ token })
       });
       const data = await response.json();
