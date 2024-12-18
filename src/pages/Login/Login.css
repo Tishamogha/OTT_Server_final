@@ -1,8 +1,13 @@
-.login{
-    height:100vh;
-    background-color:black;
+.login {
+    height: 100%;
+    background-image: 
+        url("../../assets/banner2.jpg");
+    background-size: cover;
+    background-position: center;
     padding: 20px 8%;
 }
+
+
 .login-logo{
     width: 120px;
 }
@@ -76,4 +81,19 @@
     font-weight: 500;
     cursor: pointer;
     font-size: 15px;;
+}
+
+
+.login-dropdown {
+    width: 100%;
+    height: auto;
+    background: #333;
+    color: white;
+    margin: 12px 0;
+    border: 0;
+    outline: 0;
+    border-radius: 4px;
+    padding: 16px 20px;
+    font-size: 16px;
+    font-weight: 500;
 }
